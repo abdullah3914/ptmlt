@@ -1,0 +1,143 @@
+.button {
+    background: transparent;
+    color:#333333;
+    text-decoration: underline;
+    padding: 10px 10px;
+    border-radius: 15px;
+    border:none;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover and active states */
+  }
+  
+  /* Hover state */
+  .button:hover {
+    background: linear-gradient(135deg, #00a4e00b, #00c9a70b); /* Reverse gradient on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  }
+  
+  /* Active state */
+  .button:active {
+    transform: scale(0.98); /* Slightly scales down the button to give an active effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Deepens the shadow when button is pressed */
+  }
+
+
+  .button2 {
+    background: linear-gradient(135deg, #fa21cf, #00c9c9c5); /* Reverse gradient on hover */
+    color:white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 1px solid rgb(0, 0, 0);
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease-in-out; /* Smooth transition for hover and active states */
+  }
+  
+
+
+
+  /* Style the container */
+.checkbox-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+  }
+  
+  /* Hide default radio buttons */
+  input[type="radio"] {
+    display: none;
+  }
+  
+  /* Style the label and custom square checkbox */
+  .custom-checkbox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    font-size: 14px;
+    padding-bottom:15px;
+    user-select: none;
+  }
+  .custom-checkbox1 {
+    position: relative;
+    display: flex;
+    padding-right:10px;
+    flex-direction:column;
+    align-items: left;
+    margin-top:0px;
+    padding-bottom:15px;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+  }
+  
+  .custom-checkbox2{
+    display: flex;
+    flex-direction:column;
+
+  }
+  .custom-checkbox input:checked + .checkbox-label::before {
+    background-color: #1E3A5F; /* Deep Sapphire Blue */
+    border: 2px solid #1E3A5F;
+  }
+  
+  .checkbox-label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #333333; /* Charcoal Gray */
+    background-color: transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .checkbox-label {
+    padding-left: 30px;
+    position: relative;
+  }
+
+  .label{
+    font-size:15px;
+  }
+  .label2{
+    margin-top:10px;
+    margin-left:40px;
+  }
+  .label3{
+    margin-top:10px;
+    
+  }
+
+  .sa{
+    font-size:15px;
+    padding-left:30px;
+  }
+
+  .checkbox-label::before {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .custom-checkbox input:checked + .checkbox-label::before {
+    background-color: #1E3A5F; /* Deep Sapphire Blue */
+  }
+  
+  .custom-checkbox input:checked + .checkbox-label::after {
+    content: '✔';
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #fff;
+  }
+  
+  

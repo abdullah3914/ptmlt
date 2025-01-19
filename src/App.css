@@ -1,0 +1,80 @@
+
+
+body {
+  margin: 0;
+  font-family: 'poppins';
+  padding: 0;
+  background-image: url('./images/background.svg'); /* Main large background image */
+  background-size: cover; /* Ensure the main image covers the screen */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative; /* Set relative positioning for layering */
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  background-image:  url('./images/b2.png');/* Smaller image */
+  background-size: contain; /* Contain to fit the image proportionally */
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 90%; /* Adjust the width of the smaller image */
+  height: 90%; /* Adjust the height of the smaller image */
+  bottom: 0%; /* Position from the bottom */
+  right: 0%; /* Position from the right */
+  z-index: 0; /* Ensure it’s above the main background */
+  opacity: 0.7; /* Optional transparency for the smaller image */
+}
+
+::-webkit-scrollbar{
+  width:7px;
+}
+
+::-webkit-scrollbar-track{
+  background: #CAE2E7;
+
+}
+
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(135deg, #00A3E0, #00A3E0);
+  border-radius: 40px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  width:17px;
+}
+
+
+.App {
+  text-align: left;
+}
+
+.App logo {
+  pointer-events: none;
+}
+
+.App .logo img {
+  pointer-events: none;
+  width:220px;
+  margin-left:3.7%;
+}
+
+.App header {
+  position: fixed;  /* Makes the header float over the content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color:none;  /* Semi-transparent white background */
+  backdrop-filter: blur(5px);  /* Apply blur effect to the background */
+  z-index: 1000;  /* Ensures the header is above other content */
+  box-shadow: 0 2px 15px rgba(gray);
+  border:solid;
+  border-top: 0px;
+  border-right: 0px;
+  padding:20px;
+  border-left: 0px;
+  border-bottom-width: 1px;
+  border-color:
+  #dddddd;
+}
