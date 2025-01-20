@@ -778,14 +778,14 @@ function Settings() {
 
                </div>
 
-               <div>
+               <div style={{paddingTop:'70x'}}>
                <div className="cn">
                   <label
                     className="title"
                     htmlFor="k_value"
-                    style={styles.formbh}
+                    style={styles.heading}
                   >
-                    Enter K Value
+                    Enter From 1-100
                   </label>
                   <p style={{marginTop:'0px'}}>Enter Positive integer</p>
                   <input
@@ -793,6 +793,7 @@ function Settings() {
                     id="k_value"
                     name="number"
                     min="1"
+                    max="100"
                     step="1"
                     required
                     style={{
@@ -805,29 +806,6 @@ function Settings() {
                     }}
                   />
                 </div>
-              <label
-                className="title"
-                htmlFor="p_value"
-                style={styles.formbh}
-              >
-                Enter P Value
-              </label>
-              <p style={{marginTop:'0px'}}>Enter Positive integer</p>
-              <input
-                type="number"
-                id="k_value"
-                name="number"
-                min="1"
-                step="1"
-                required
-                style={{
-                  padding: '8px',
-                      fontSize: '14px',
-                      width: '80%',
-                      borderRadius: '5px',
-                      border:'none',
-                }}
-              />
               </div>
 
               {/* Second Column: Other Fields */}

@@ -14,7 +14,7 @@ body {
 
 body::after {
   content: "";
-  position: absolute;
+  position: fixed;
   background-image:  url('./images/b2.png');/* Smaller image */
   background-size: contain; /* Contain to fit the image proportionally */
   background-repeat: no-repeat;
@@ -23,7 +23,7 @@ body::after {
   height: 90%; /* Adjust the height of the smaller image */
   bottom: 0%; /* Position from the bottom */
   right: 0%; /* Position from the right */
-  z-index: 0; /* Ensure it’s above the main background */
+  z-index:0; /* Ensure it’s above the main background */
   opacity: 0.7; /* Optional transparency for the smaller image */
 }
 
