@@ -8,6 +8,7 @@ import D5 from './images/d5.png';
 import D6 from './images/d6.png';
 // import D1 from './images/d1.jpeg';
 import D2 from './images/d2.png';
+import Process from './images/process.png';
 // import D3 from './images/d3.jpeg';
 // import D4 from './images/d4.png';
 import Wee from './images/weel.png';
@@ -1204,7 +1205,7 @@ function Settings() {
       <div style={styles.bottomPane}>
         <div style={styles.boxb1}>
           <div style={{ flexDirection: 'column', width: '100%' }}>
-            <img style={styles.img} src={D5} alt="Logo" />
+            <img style={styles.img} src={Process} alt="Logo" />
             <h1 style={{
               fontWeight: '600',
               fontSize: '30px',
