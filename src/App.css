@@ -23,7 +23,7 @@ body::after {
   height: 90%; /* Adjust the height of the smaller image */
   bottom: 0%; /* Position from the bottom */
   right: 0%; /* Position from the right */
-  z-index: 0; /* Ensure it’s above the main background */
+  z-index:0; /* Ensure it’s above the main background */
   opacity: 0.7; /* Optional transparency for the smaller image */
 }
 

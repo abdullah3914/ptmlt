@@ -2,8 +2,10 @@ import React from 'react';
 import logo from './images/logo4.png';
 import ReactDOM from 'react-dom';
 import Welc from './Welcome';
+import Initial from './initial';
 import Background from './images/background.svg';
 import Settings from './settings'
+import Final from './final'
 //import { AlgorithmProvider } from './AlgoContext';
 import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -37,6 +39,8 @@ function App() {
       <Routes>
       <Route path="/" element={<Welc/>} />
       <Route path="/settings" element={<Settings/>} />
+      <Route path="/initial" element={<Initial/>} />
+      <Route path="/final" element={<Final/>} />
       </Routes>
       </Router>
       </body>
