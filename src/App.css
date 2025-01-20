@@ -14,7 +14,7 @@ body {
 
 body::after {
   content: "";
-  position: absolute;
+  position: fixed;
   background-image:  url('./images/b2.png');/* Smaller image */
   background-size: contain; /* Contain to fit the image proportionally */
   background-repeat: no-repeat;

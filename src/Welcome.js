@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
-import Csp from './images/csp.jpeg';
-import Csp3 from './images/csp3.png';
+// import Csp from './images/csp.jpeg';
+// import Csp3 from './images/csp3.png';
 import Csp4 from './images/csp4.png';
-import D1 from './images/d1.jpeg';
-import D2 from './images/d2.png';
-import D3 from './images/d3.jpeg';
+// import D1 from './images/d1.jpeg';
+// import D2 from './images/d2.png';
+// import D3 from './images/d3.jpeg';
 import D4 from './images/d4.png';
-import Wee from './images/weel.png';
-import b3 from './images/b3.png';/* Smaller image */
+// import Wee from './images/weel.png';
+// import b3 from './images/b3.png';/* Smaller image */
 
 function Welc() {
 
-  const navigate1= useNavigate();
-
   const goToAlgo = () => {
-    navigate('/algo');
+    navigate('/settings');
   };
 
   const [showPopup, setShowPopup] = useState(false);
@@ -99,7 +97,7 @@ function Welc() {
     },
 
     bottomPane: {
-      width: '30%',  // Full width
+      width: '40%',  // Full width
       height: '80%',  // Take up 50% of the height
       display: 'flex',
       marginTop:'8%',
@@ -166,6 +164,7 @@ function Welc() {
       imgt2:{
         paddingLeft:'30px', 
         paddingRight:'30px', 
+        paddingTop: '20px',
         fontSize:'17px',
         textAlign:'center',
         fontStyle: 'italic',
@@ -272,7 +271,7 @@ function Welc() {
 
         <div style={styles.boxt2}>
 
-        <button style={styles.boxt2b}>Lets Get Started</button>
+        <button style={styles.boxt2b} onClick={goToAlgo}>Lets Get Started</button>
         <button style={styles.boxt2b} onClick={togglePopup}>Help</button>
 
         </div>
