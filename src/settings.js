@@ -667,7 +667,7 @@ function Settings() {
                   style={styles.uploadInput}
                 />
                 <button
-                  class="button2"
+                  className="button2"
                   onClick={handleUploadFile}
                 >
                   Upload
@@ -777,7 +777,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="o" checked={datasetType === 'o'} onChange={handleDatasetType} defaultChecked />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="o"  onChange={handleDatasetType} defaultChecked />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -900,7 +900,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u1" checked={datasetType === 'u1'} onChange={handleDatasetType} />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u1"  onChange={handleDatasetType} />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -915,15 +915,15 @@ function Settings() {
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
                     <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="1" checked={selectedConversionType === 1} onChange={handleOptionChange} defaultChecked />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="1"  onChange={handleOptionChange} defaultChecked />
                       <span className="checkbox-label">True</span>
                     </label>
                     <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="2" checked={selectedConversionType === 2} onChange={handleOptionChange} />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="2"  onChange={handleOptionChange} />
                       <span className="checkbox-label">True/False</span>
                     </label>
                     <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="3" checked={selectedConversionType === 3} onChange={handleOptionChange} />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="3"  onChange={handleOptionChange} />
                       <span className="checkbox-label">True/False/Limit</span>
                     </label>
                   </div>
@@ -936,7 +936,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u2" checked={datasetType === 'u2'} onChange={handleDatasetType} />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u2" onChange={handleDatasetType} />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -968,26 +968,26 @@ function Settings() {
               <div>
                 <h1 style={styles.formth}>Triadic Operator</h1>
 
-                <div class="custom-checkbox1">
+                <div className="custom-checkbox1">
 
-                  <label class="custom-checkbox">
+                  <label className="custom-checkbox">
                     <input type="radio" name="option" value="op1" disabled={!(currentMenu === 'Parameter')} checked={selectedOperator === 'op1'} onChange={handleOperatorType} />
-                    <span class="checkbox-label">Operator 1</span>
+                    <span className="checkbox-label">Operator 1</span>
                   </label>
-                  <label class="custom-checkbox">
+                  <label className="custom-checkbox">
                     <input type="radio" name="option" value="op2" disabled={!(currentMenu === 'Parameter')} checked={selectedOperator === 'op2'} onChange={handleOperatorType} />
-                    <span class="checkbox-label">Operator 2</span>
+                    <span className="checkbox-label">Operator 2</span>
                   </label>
-                  <label class="custom-checkbox">
+                  <label className="custom-checkbox">
                     <input type="radio" name="option" value="op3" disabled={!(currentMenu === 'Parameter')} checked={selectedOperator === 'op3'} onChange={handleOperatorType} />
-                    <span class="checkbox-label">Operator 3</span>
+                    <span className="checkbox-label">Operator 3</span>
                   </label>
 
                 </div>
               </div>
 
 
-              <div class="label2">
+              <div className="label2">
                 <label style={styles.formth}
                 >
                   Enter Class Name
@@ -1008,11 +1008,11 @@ function Settings() {
                 />
               </div>
 
-              <div class="label3">
+              <div className="label3">
                 <label style={styles.formth}>
                   Enter Split Ratio
                 </label>
-                <p class="label4">Enter a value ranging from 0.1 - 1</p>
+                <p className="label4">Enter a value ranging from 0.1 - 1</p>
                 <input
                   type="number"
                   id="splitRatioInput"
@@ -1032,7 +1032,7 @@ function Settings() {
                 />
               </div>
             </div>
-            <h1 class="sa" >Algorithm Slected: {algorithm} </h1>
+            <h1 className="sa" >Algorithm Slected: {algorithm} </h1>
 
             <div style={styles.formb}>
               {algorithm === 'knn' && (
@@ -1043,19 +1043,19 @@ function Settings() {
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '17px' }}>
 
-                    <div class="custom-checkbox2">
+                    <div className="custom-checkbox2">
                       <h1 style={styles.formbh}>Select Formula</h1>
-                      <label class="custom-checkbox">
+                      <label className="custom-checkbox">
                         <input type="radio" name="option" disabled={!(currentMenu === 'Parameter')} value="minkowski" checked={selectedFormula === 'minkowski'} onChange={handleFormula} />
-                        <span class="checkbox-label">Minkowski Distance</span>
+                        <span className="checkbox-label">Minkowski Distance</span>
                       </label>
-                      <label class="custom-checkbox">
+                      <label className="custom-checkbox">
                         <input type="radio" name="option" disabled={!(currentMenu === 'Parameter')} value="euclidean" checked={selectedFormula === 'euclidean'} onChange={handleFormula} />
-                        <span class="checkbox-label">Euclidean Distance</span>
+                        <span className="checkbox-label">Euclidean Distance</span>
                       </label>
-                      <label class="custom-checkbox">
+                      <label className="custom-checkbox">
                         <input type="radio" name="option" disabled={!(currentMenu === 'Parameter')} value="manhattan" checked={selectedFormula === 'manhattan'} onChange={handleFormula} />
-                        <span class="checkbox-label">Manhattan Distance</span>
+                        <span className="checkbox-label">Manhattan Distance</span>
 
                       </label>
 

@@ -583,6 +583,7 @@ function Initial() {
                     id="percentageInput"
                     name="number"
                     min="1"
+                    max="100"
                     step="1"
                     required
                     style={{

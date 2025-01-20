@@ -272,7 +272,7 @@ function Welc() {
         <div style={styles.boxt2}>
 
         <button style={styles.boxt2b} onClick={goToAlgo}>Lets Get Started</button>
-        <button style={styles.boxt2b} onClick={togglePopup}>Help</button>
+        <button style={styles.boxt2b} onClick={togglePopup}>About Triadic</button>
 
         </div>
         
