@@ -12,6 +12,8 @@ import './initial.css'
 import D7 from './images/d7.png';
 import D8 from './images/d8.png';
 import D9 from './images/d9.png';
+import A1 from './images/a1.png';
+import A2 from './images/a2.png';
 // import Wee from './images/weel.png';
 // import b3 from './images/b3.png';/* Smaller image */
 
@@ -65,6 +67,37 @@ function Initial() {
       height: '100vh',  // Make the container take up the full viewport height
     },
 
+    popupOverlay: {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 1000,
+    },
+    popupContent: {
+      backgroundColor: "white",
+      padding: "20px",
+      borderRadius: "10px",
+      textAlign: "center",
+      maxWidth: "400px",
+      width: "90%",
+      fontFamily: "Poppins, sans-serif",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    },
+    closeButton: {
+      background: "red",
+      color: "white",
+      border: "none",
+      borderRadius: "5px",
+      padding: "10px 20px",
+      cursor: "pointer",
+      marginTop: "10px",
+    },
 
     topPane: {
       flexDirection: 'column',
@@ -509,7 +542,7 @@ function Initial() {
 
         <div style={{display:'flex',justifyContent:'center',flexDirection:'column',marginBottom:'2%', marginRight:'05%'}}>
         <h1 style={styles.img1h}>Semi Triadic Formulae: </h1>
-        <img style={styles.img2} src={D8} alt="Logo" />
+        <img style={styles.img2} src={A1} alt="Logo" />
         </div>
 
         </div>
@@ -539,7 +572,7 @@ function Initial() {
 
         <div style={{display:'flex',justifyContent:'center',flexDirection:'column',marginBottom:'2%', marginRight:'05%'}}>
         <h1 style={styles.img1h}>Fully Triadic Formulae: </h1>
-        <img style={styles.img2} src={D8} alt="Logo" />
+        <img style={styles.img2} src={A2} alt="Logo" />
         </div>
 
         </div>
