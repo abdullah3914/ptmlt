@@ -16,7 +16,36 @@ import Icon from './images/logo1.png';
 
 function Settings() {
 
+  const navigate = useNavigate();
+
+
+  const [clickedButton, setClickedButton] = useState(null);
+  const [quote, setQuote] = useState('');
+  const [algorithm, setAlgorithm] = useState(null);
+  const [dataset, setDataset] = useState(null);
+  const [currentMenu, setCurrentMenu] = useState("Algorithm");
+  const [datasetType, setDatasetType] = useState('o');
+  const [showPopup, setShowPopup] = useState(false);
+  const [showErrorPopup, setErrorPopup] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  // const [isUploaded, setIsUploaded] = useState(false);
+  const [showPVal, setShowPVal] = useState(false);
+  const [selectedFormula, setFormula] = useState("");
+  const [selectedOperator, setOperatorType] = useState("");
+  const [dType, setDtype] = useState("1");
+  const [file, setFile] = useState(null);
+  const [isClassical, setUploadType] = useState(null);
+  const [selectedConversionType, setSelectedOption] = useState("");
+  const motivationalQuotes = [
+    '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
+    "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
+    '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
+  ];
+
   const handleFormSubmit = async (event) => {
+    handleLoading(true);
     let algoName = algorithm;
     console.log("ALGO NAME: ", algoName);
     let className = document.getElementById("DatasetClass").value || "";
@@ -24,6 +53,7 @@ function Settings() {
     let k_value = 0;
     let p_value = 0;
     let documentName = "";
+    let bins = 2;
     if (algoName === 'knn') {
       k_value = Number(document.getElementById("k_value").value);
       if (showPVal) {
@@ -62,7 +92,8 @@ function Settings() {
       operator_type: sp || 1,
       document_name: documentName,
       k_value: Number(k_value) || 0,
-      p_value: Number(p_value) || 0
+      p_value: Number(p_value) || 0,
+      bins: bins
     }
 
     try {
@@ -76,12 +107,23 @@ function Settings() {
 
       const result = await response.text();
       console.log("Response from server:", result);
-      //handleLoading(false);
-      navigate("/initialResult", { state: { result } }); // Replace "/result" with your result page route
+      if (response.ok) {
+        navigate("/initial", { state: { result } });
+      }
+      else {
+        let parsed_result = JSON.parse(result || "{}");
+        let message = `${parsed_result.error}`;
+        setErrMessage(message);
+        setErrorPopup(true);
+      }
+      handleLoading(false);
 
     } catch (error) {
-      //handleLoading(false);
+      handleLoading(false);
       console.error("Error sending data:", error);
+      let message = `${error}`;
+      setErrMessage(message);
+      setErrorPopup(true);
     }
   };
 
@@ -95,22 +137,6 @@ function Settings() {
     'knn': 'diagnosis.csv',
     'linearRegression': 'LR1.csv'
   }
-
-  const [algorithm, setAlgorithm] = useState(null);
-  const [dataset, setDataset] = useState(null);
-  const [currentMenu, setCurrentMenu] = useState("Algorithm");
-  const [datasetType, setDatasetType] = useState('o');
-  const [showPopup, setShowPopup] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
- // const [isUploaded, setIsUploaded] = useState(false);
-  const [showPVal, setShowPVal] = useState(false);
-  const [selectedFormula, setFormula] = useState("");
-  const [selectedOperator, setOperatorType] = useState("");
-  const [dType, setDtype] = useState("1");
-  const [file, setFile] = useState(null);
-  const [isClassical, setUploadType] = useState(null);
-  const [selectedConversionType, setSelectedOption] = useState("");
 
 
   const handleDType = (event) => {
@@ -140,7 +166,7 @@ function Settings() {
 
   const handleCurrentMenu = (value, isFirst) => {
     console.log("Value: ", value);
-    if(!isFirst && currentMenu === 'Algorithm' && algorithm == null){
+    if (!isFirst && currentMenu === 'Algorithm' && algorithm == null) {
       alert("Please select an algorithm first.");
       return;
     }
@@ -190,7 +216,7 @@ function Settings() {
   const togglePopup = (value) => {
     handleUploadType(value);
     setShowPopup(!showPopup);
-  //  setIsUploaded(false);
+    //  setIsUploaded(false);
   };
 
 
@@ -282,11 +308,6 @@ function Settings() {
 
 
 
-  const navigate = useNavigate();
-
-
-  const [clickedButton, setClickedButton] = useState(null);
-  const [quote, setQuote] = useState('');
   const styles = {
     splitScreen: {
       display: 'flex',
@@ -628,11 +649,6 @@ function Settings() {
     },
   };
 
-  const motivationalQuotes = [
-    '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
-    "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
-    '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
-  ];
 
   return (
 
@@ -670,6 +686,18 @@ function Settings() {
         </div>
       )}
 
+{showErrorPopup && (
+        <div style={styles.popupOverlay}>
+          <div style={styles.popupContent}>
+            <h2>Error</h2>
+               <p>{errMessage}</p>
+                <button style={styles.closeButton} onClick={()=> setErrorPopup(false)}>
+                  Close
+                </button>
+          </div>
+        </div>
+      )}
+
       {
         isLoading && (
           <div style={styles.overlay}>
@@ -701,14 +729,14 @@ function Settings() {
                     {clickedButton === 'decisionTree' && (
                       <>
                         <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => handleClick('dt_id3')}>ID3</button>
-                        <button className="button" disabled={!(currentMenu === 'Algorithm')}  onClick={() => handleClick('dt_c5_0')}>C5.0</button>
+                        <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => handleClick('dt_c5_0')}>C5.0</button>
                       </>
                     )}
                   </div>
 
                   <div style={styles.Aoption}>
                     <img style={styles.Icon} src={Icon} alt="Logo" />
-                    <button className="button"disabled={!(currentMenu === 'Algorithm')}  onClick={() => {handleClick('linearRegression'); showOptions(null)}}>Linear Regression</button>
+                    <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => { handleClick('linearRegression'); showOptions(null) }}>Linear Regression</button>
                   </div>
 
                   <div style={styles.Aoption}>
@@ -716,8 +744,8 @@ function Settings() {
                     <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => showOptions('NaiveBayes')}>Naive Bayes</button>
                     {clickedButton === 'NaiveBayes' && (
                       <>
-                        <button className="button"disabled={!(currentMenu === 'Algorithm')}  onClick={() => handleClick('multinomial')}>Multinomial</button>
-                        <button className="button"disabled={!(currentMenu === 'Algorithm')}  onClick={() => handleClick('bernouli')}>Bernouli</button>
+                        <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => handleClick('multinomial')}>Multinomial</button>
+                        <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => handleClick('bernouli')}>Bernouli</button>
                         <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => handleClick('gaussian')}>Gaussian</button>
                       </>
                     )}
@@ -725,7 +753,7 @@ function Settings() {
 
                   <div style={styles.Aoption}>
                     <img style={styles.Icon} src={Icon} alt="Logo" />
-                    <button className="button" disabled={!(currentMenu === 'Algorithm')}  onClick={() => {handleClick('knn'); showOptions(null)}}>KNN</button>
+                    <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => { handleClick('knn'); showOptions(null) }}>KNN</button>
                   </div>
 
                 </div>
@@ -734,7 +762,7 @@ function Settings() {
 
               <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'end', marginBottom: '40px', marginRight: '30px', width: '40%' }}>
                 <h1 style={{ fontSize: '15px', fontWeight: '500' }}>Selected Algorithm: {algorithm}</h1>
-                <button className="button2"  disabled={!(currentMenu === 'Algorithm')} onClick={() => { handleCurrentMenu("Dataset");}}>Next</button>
+                <button className="button2" disabled={!(currentMenu === 'Algorithm')} onClick={() => { handleCurrentMenu("Dataset"); }}>Next</button>
               </div>
 
 
@@ -749,7 +777,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio" disabled={!(currentMenu === 'Dataset')}  name="datasetSelection" value="o" checked={datasetType === 'o'} onChange={handleDatasetType} defaultChecked />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="o" checked={datasetType === 'o'} onChange={handleDatasetType} defaultChecked />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -760,24 +788,24 @@ function Settings() {
 
               {/* Show different options based on the selected algorithm */}
               <div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <p>{datasetNames[algorithm]}</p>
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-                    <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="1" checked={dType === '1'} onChange={handleDType} defaultChecked />
-                      <span className="checkbox-label">True</span>
-                    </label>
-                    <label className="custom-checkbox">
-                      <input type="radio"disabled={!(currentMenu === 'Dataset')}  name="datasetOption" value="2" checked={dType === '2'} onChange={handleDType} />
-                      <span className="checkbox-label">True/False</span>
-                    </label>
-                    <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="3" checked={dType === '3'} onChange={handleDType} />
-                      <span className="checkbox-label">True/False/Limit</span>
-                    </label>
-                  </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <p>{datasetNames[algorithm]}</p>
                 </div>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
+                  <label className="custom-checkbox">
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="1" checked={dType === '1'} onChange={handleDType} defaultChecked />
+                    <span className="checkbox-label">True</span>
+                  </label>
+                  <label className="custom-checkbox">
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="2" checked={dType === '2'} onChange={handleDType} />
+                    <span className="checkbox-label">True/False</span>
+                  </label>
+                  <label className="custom-checkbox">
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="3" checked={dType === '3'} onChange={handleDType} />
+                    <span className="checkbox-label">True/False/Limit</span>
+                  </label>
+                </div>
+              </div>
               {/* {algorithm === 'linearRegression' && (
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -872,7 +900,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio"disabled={!(currentMenu === 'Dataset')}  name="datasetSelection" value="u1" checked={datasetType === 'u1'} onChange={handleDatasetType} />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u1" checked={datasetType === 'u1'} onChange={handleDatasetType} />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -887,20 +915,20 @@ function Settings() {
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
                     <label className="custom-checkbox">
-                      <input type="radio"  disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="1" checked={selectedConversionType === 1} onChange={handleOptionChange} defaultChecked />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="1" checked={selectedConversionType === 1} onChange={handleOptionChange} defaultChecked />
                       <span className="checkbox-label">True</span>
                     </label>
                     <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')}  name="conversionOption" value="2" checked={selectedConversionType === 2} onChange={handleOptionChange} />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="2" checked={selectedConversionType === 2} onChange={handleOptionChange} />
                       <span className="checkbox-label">True/False</span>
                     </label>
                     <label className="custom-checkbox">
-                      <input type="radio"disabled={!(currentMenu === 'Dataset')}  name="conversionOption" value="3" checked={selectedConversionType === 3} onChange={handleOptionChange} />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="3" checked={selectedConversionType === 3} onChange={handleOptionChange} />
                       <span className="checkbox-label">True/False/Limit</span>
                     </label>
                   </div>
                 </div>
-                <button className="button2"disabled={!(currentMenu === 'Dataset')}  onClick={() => togglePopup(true)}>Upload Classical Dataset</button>
+                <button className="button2" disabled={!(currentMenu === 'Dataset')} onClick={() => togglePopup(true)}>Upload Classical Dataset</button>
               </div>
             </div>
           </div>
@@ -908,7 +936,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio"disabled={!(currentMenu === 'Dataset')}  name="datasetSelection" value="u2" checked={datasetType === 'u2'} onChange={handleDatasetType} />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u2" checked={datasetType === 'u2'} onChange={handleDatasetType} />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -916,15 +944,15 @@ function Settings() {
               </h1>
             </div>
             <div style={styles.Aoptions}>
-              <button className="button2"disabled={!(currentMenu === 'Dataset')}  onClick={() => togglePopup(false)}>Upload</button>
+              <button className="button2" disabled={!(currentMenu === 'Dataset')} onClick={() => togglePopup(false)}>Upload</button>
             </div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'end', margin: '30px', marginBottom: '10px', marginTop: '10px', width: '40%', paddingBottom: '0px' }}>
             <h1 style={{ fontSize: '15px', fontWeight: '500' }}>Selected Algorithm: {algorithm} </h1>
             <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
-              <button className="button2"disabled={!(currentMenu === 'Dataset')}  onClick={() => {handleCurrentMenu("Algorithm"); }}>Back</button>
-              <button className="button2"disabled={!(currentMenu === 'Dataset')}  onClick={() => { handleCurrentMenu("Parameter"); handleDataset();}}>Next</button>
+              <button className="button2" disabled={!(currentMenu === 'Dataset')} onClick={() => { handleCurrentMenu("Algorithm"); }}>Back</button>
+              <button className="button2" disabled={!(currentMenu === 'Dataset')} onClick={() => { handleCurrentMenu("Parameter"); handleDataset(); }}>Next</button>
             </div>
           </div>
 
@@ -1159,9 +1187,9 @@ function Settings() {
 
             <div style={{ display: 'flex', paddingLeft: '30px', paddingBottom: '40px', paddingTop: '20px', gap: '30px' }}>
               <button
-                className="button2"  disabled={!(currentMenu === 'Parameter')} onClick={() => {handleCurrentMenu("Dataset");}}>Back</button>
+                className="button2" disabled={!(currentMenu === 'Parameter')} onClick={() => { handleCurrentMenu("Dataset"); }}>Back</button>
               <button
-                className="button2"  disabled={!(currentMenu === 'Parameter')} onClick={handleFormSubmit}>Run Algorithm</button>
+                className="button2" disabled={!(currentMenu === 'Parameter')} onClick={handleFormSubmit}>Run Algorithm</button>
             </div>
 
 

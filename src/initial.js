@@ -1,29 +1,45 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import './initial.css'
-import Csp from './images/csp.jpeg';
-import Csp3 from './images/csp3.png';
-import Csp4 from './images/csp4.png';
-import D1 from './images/d1.jpeg';
-import D2 from './images/d2.png';
-import D3 from './images/d3.jpeg';
-import D4 from './images/d4.png';
+// import Csp from './images/csp.jpeg';
+// import Csp3 from './images/csp3.png';
+// import Csp4 from './images/csp4.png';
+// import D1 from './images/d1.jpeg';
+// import D2 from './images/d2.png';
+// import D3 from './images/d3.jpeg';
+// import D4 from './images/d4.png';
 import D7 from './images/d7.png';
 import D8 from './images/d8.png';
 import D9 from './images/d9.png';
-import Wee from './images/weel.png';
-import b3 from './images/b3.png';/* Smaller image */
+// import Wee from './images/weel.png';
+// import b3 from './images/b3.png';/* Smaller image */
 
-function Welc() {
-
-  const navigate1= useNavigate();
-
-  const goToAlgo = () => {
-    navigate('/algo');
-  };
+function Initial() {
 
   const navigate = useNavigate();
+  const location = useLocation();
+   const [showErrorPopup, setErrorPopup] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+      const [errMessage, setErrMessage] = useState("");
+        const [quote, setQuote] = useState('');
+        const motivationalQuotes = [
+          '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
+          "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
+          '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
+        ];
+    
+  const { result } = location.state || {};
   let parsed_result = {};
+  try {
+    parsed_result = JSON.parse(result || "{}");
+  } catch (error) {
+    console.error("Error parsing result:", error);
+    let msg = `Error parsing result: ${error}`;
+    alert(msg);
+  }
+
+  console.log("Initital Result: ", parsed_result);
 
   
   const accuracy = parsed_result.accuracy * 100 || 0;
@@ -322,6 +338,60 @@ function Welc() {
           }
   };
 
+  const resolveLimit = async () => {
+    handleLoading(true);
+    const auto = true;
+    const percentage = Number(document.getElementById("percentageInput").value) / 100;
+
+    const data = {
+      actual: actual,
+      predicted: predicted,
+      percentage: percentage,
+      auto: auto
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8080/resolveLimit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.text();
+      console.log("Response from server:", result);
+      if (response.ok){
+        localStorage.setItem("initResult", JSON.stringify(parsed_result));
+        const res = {
+          'initial': JSON.stringify(parsed_result),
+          'final': result
+        }
+        const data = JSON.stringify(res);
+        console.log("Initial Screen: ", data);
+        navigate("/final", { state: { data } });
+      }
+      else {
+        let parsed_result = JSON.parse(result || "{}");
+        let message = `${parsed_result.error}`;
+        setErrMessage(message);
+        setErrorPopup(true);
+      }
+      handleLoading(false);
+    } catch (error) {
+      console.error("Error sending data:", error);
+      handleLoading(false);
+    }
+  };
+
+  const handleLoading = (enable) => {
+    setIsLoading(enable);
+    if (!enable) return;
+    const randomQuote =
+      motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+    setQuote(randomQuote);
+  }
+
   return (
     <>
     <div style={styles.splitScreen}>
@@ -426,12 +496,12 @@ function Welc() {
         <div style={styles.Box21}>
             <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
                 <div>
-                    <h1 className="buttonn">Accuracy: xxx</h1>
-                    <h1 className="buttonn">Precision: xxx</h1>
+                    <h1 className="buttonn">Accuracy: {semi_accuracy}</h1>
+                    <h1 className="buttonn">Precision: {semi_precision}</h1>
                 </div>
                 <div style={{borderLeft:'1px solid'}}>
-                    <h1 className="buttonn1">Recall: xxx</h1>
-                    <h1 className="buttonn1">Rate Of Learning: xxx</h1>
+                    <h1 className="buttonn1">Recall: {semi_recall}</h1>
+                    <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}</h1>
                 </div>
             </div>
         </div>
@@ -456,12 +526,12 @@ function Welc() {
         <div style={styles.Box21}>
             <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
                 <div>
-                    <h1 className="buttonn">Accuracy: xxx</h1>
-                    <h1 className="buttonn">Precision: xxx</h1>
+                    <h1 className="buttonn">Accuracy: {accuracy}</h1>
+                    <h1 className="buttonn">Precision: {precision}</h1>
                 </div>
                 <div style={{borderLeft:'1px solid'}}>
-                    <h1 className="buttonn1">Recall: xxx</h1>
-                    <h1 className="buttonn1">Rate Of Learning: xxx</h1>
+                    <h1 className="buttonn1">Recall: {recall}</h1>
+                    <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}</h1>
                 </div>
             </div>
         </div>
@@ -510,7 +580,7 @@ function Welc() {
                   <p style={{marginTop:'15px'}}>Enter Positive integer (Enter Value from 1-100)</p>
                   <input
                     type="number"
-                    id="k_value"
+                    id="percentageInput"
                     name="number"
                     min="1"
                     step="1"
@@ -533,12 +603,34 @@ function Welc() {
 
       </div>
       <div style={{marginBottom:'9%',display:'flex',justifyContent:'center',zIndex:'100'}}>
-      <button className="RunA">Next</button>
+      <button className="RunA" onClick={resolveLimit}>Next</button>
       </div>
 
     </div>
+
+    {showErrorPopup && (
+        <div style={styles.popupOverlay}>
+          <div style={styles.popupContent}>
+            <h2>Error</h2>
+               <p>{errMessage}</p>
+                <button style={styles.closeButton} onClick={()=> setErrorPopup(false)}>
+                  Close
+                </button>
+          </div>
+        </div>
+      )}
+
+      {
+        isLoading && (
+          <div style={styles.overlay}>
+            <p style={styles.text}>Loading</p>
+            <p style={styles.quote}>{quote}</p>
+          </div>
+
+        )
+      }
 </>
   );
 }
 
-export default Welc;
+export default Initial;

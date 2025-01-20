@@ -1,46 +1,61 @@
-import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import './final.css'
-import Csp from './images/csp.jpeg';
-import Csp3 from './images/csp3.png';
-import Csp4 from './images/csp4.png';
-import D1 from './images/d1.jpeg';
-import D2 from './images/d2.png';
-import D3 from './images/d3.jpeg';
-import D4 from './images/d4.png';
-import D7 from './images/d7.png';
-import D8 from './images/d8.png';
-import D9 from './images/d9.png';
-import Wee from './images/weel.png';
-import b3 from './images/b3.png';/* Smaller image */
 
-function Welc() {
-
-  const navigate1= useNavigate();
-
-  const goToAlgo = () => {
-    navigate('/algo');
-  };
-
+function Final() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const  result  = location.state || {};
   let parsed_result = {};
+  try {
+    parsed_result = JSON.parse(result.data || "{}");
+  } catch (error) {
+    console.error("Error parsing result:", error);
+    let msg = `Error parsing result: ${error}`;
+    alert(msg);
+  }
+  console.log("Final Screen: ", parsed_result);
 
-  
-  const accuracy = parsed_result.accuracy * 100 || 0;
-  const precision = parsed_result.precision * 100 || 0;
-  const recall = parsed_result.recall * 100 || 0;
-  const rate_of_learning = parsed_result.rate_of_learning * 100 || 0;
-  const semi_accuracy = parsed_result.semi_accuracy * 100 || 0;
-  const semi_precision = parsed_result.semi_precision * 100 || 0;
-  const semi_recall = parsed_result.semi_recall * 100 || 0;
-  const labels_obj = parsed_result.labels || {};
-  const matrix = parsed_result.matrix || [];
-  const actual = parsed_result.actual || [];
-  const predicted = parsed_result.predicted || [];
+const oldResult = JSON.parse(parsed_result.initial || "{}");
+const newResult = JSON.parse(parsed_result.final || "{}");
+
+  const init_accuracy = oldResult.accuracy * 100 || 0;
+  const init_precision = oldResult.precision * 100 || 0;
+  const init_recall = oldResult.recall * 100 || 0;
+  const init_rate_of_learning = oldResult.rate_of_learning * 100 || 0;
+  const init_semi_accuracy = oldResult.semi_accuracy * 100 || 0;
+  const init_semi_precision = oldResult.semi_precision * 100 || 0;
+  const init_semi_recall = oldResult.semi_recall * 100 || 0;
+ // const init_labels_obj = oldResult.labels || {};
+  const init_matrix = oldResult.matrix || [];
+  // const init_actual = oldResult.actual || [];
+  // const init_predicted = oldResult.predicted || [];
+  // const init_labels = Object.entries(init_labels_obj).reduce((acc, [key, value]) => {
+  //   acc[value] = key;
+  //   return acc;
+  // }, []);
+
+  const accuracy = newResult.accuracy * 100 || 0;
+  const precision = newResult.precision * 100 || 0;
+  const recall = newResult.recall * 100 || 0;
+  const rate_of_learning = newResult.rate_of_learning * 100 || 0;
+  const semi_accuracy = newResult.semi_accuracy * 100 || 0;
+  const semi_precision = newResult.semi_precision * 100 || 0;
+  const semi_recall = newResult.semi_recall * 100 || 0;
+  const labels_obj = newResult.labels || {};
+  const matrix = newResult.matrix || [];
+  // const actual = newResult.actual || [];
+  // const predicted = newResult.predicted || [];
   const labels = Object.entries(labels_obj).reduce((acc, [key, value]) => {
     acc[value] = key;
     return acc;
   }, []);
+
+  // const labels = ['fdajsjfdal', 'fadijkgadsf'];
+
+  const goToAlgo = () => {
+    navigate('/');
+  }
 
   const styles = {
     splitScreen: {
@@ -224,7 +239,7 @@ function Welc() {
             marginLeft:'5%',
             paddingTop:'10px',
             paddingBottom:'40px',
-            paddingLeft:'40px',
+            paddingLeft:'20px',
             border:'solid',
             borderWidth:'1px',
             borderRadius:'20px',
@@ -349,57 +364,57 @@ function Welc() {
                 <tbody>
                   <tr>
                     <th>{labels[0]}/T</th>
-                    <td>{matrix?.[0]?.[0] || 0}</td>
-                    <td>{matrix?.[0]?.[1] || 0}</td>
-                    <td>{matrix?.[0]?.[2] || 0}</td>
-                    <td>{matrix?.[0]?.[3] || 0}</td>
-                    <td>{matrix?.[0]?.[4] || 0}</td>
-                    <td>{matrix?.[0]?.[5] || 0}</td>
+                    <td>{init_matrix?.[0]?.[0] || 0}</td>
+                    <td>{init_matrix?.[0]?.[1] || 0}</td>
+                    <td>{init_matrix?.[0]?.[2] || 0}</td>
+                    <td>{init_matrix?.[0]?.[3] || 0}</td>
+                    <td>{init_matrix?.[0]?.[4] || 0}</td>
+                    <td>{init_matrix?.[0]?.[5] || 0}</td>
                   </tr>
                   <tr>
                     <th>{labels[0]}/F</th>
-                    <td>{matrix?.[1]?.[0] || 0}</td>
-                    <td>{matrix?.[1]?.[1] || 0}</td>
-                    <td>{matrix?.[1]?.[2] || 0}</td>
-                    <td>{matrix?.[1]?.[3] || 0}</td>
-                    <td>{matrix?.[1]?.[4] || 0}</td>
-                    <td>{matrix?.[1]?.[5] || 0}</td>
+                    <td>{init_matrix?.[1]?.[0] || 0}</td>
+                    <td>{init_matrix?.[1]?.[1] || 0}</td>
+                    <td>{init_matrix?.[1]?.[2] || 0}</td>
+                    <td>{init_matrix?.[1]?.[3] || 0}</td>
+                    <td>{init_matrix?.[1]?.[4] || 0}</td>
+                    <td>{init_matrix?.[1]?.[5] || 0}</td>
                   </tr>
                   <tr>
                     <th>{labels[0]}/L</th>
-                    <td>{matrix?.[2]?.[0] || 0}</td>
-                    <td>{matrix?.[2]?.[1] || 0}</td>
-                    <td>{matrix?.[2]?.[2] || 0}</td>
-                    <td>{matrix?.[2]?.[3] || 0}</td>
-                    <td>{matrix?.[2]?.[4] || 0}</td>
-                    <td>{matrix?.[2]?.[5] || 0}</td>
+                    <td>{init_matrix?.[2]?.[0] || 0}</td>
+                    <td>{init_matrix?.[2]?.[1] || 0}</td>
+                    <td>{init_matrix?.[2]?.[2] || 0}</td>
+                    <td>{init_matrix?.[2]?.[3] || 0}</td>
+                    <td>{init_matrix?.[2]?.[4] || 0}</td>
+                    <td>{init_matrix?.[2]?.[5] || 0}</td>
                   </tr>
                   <tr>
                     <th>{labels[1]}/T</th>
-                    <td>{matrix?.[3]?.[0] || 0}</td>
-                    <td>{matrix?.[3]?.[1] || 0}</td>
-                    <td>{matrix?.[3]?.[2] || 0}</td>
-                    <td>{matrix?.[3]?.[3] || 0}</td>
-                    <td>{matrix?.[3]?.[4] || 0}</td>
-                    <td>{matrix?.[3]?.[5] || 0}</td>
+                    <td>{init_matrix?.[3]?.[0] || 0}</td>
+                    <td>{init_matrix?.[3]?.[1] || 0}</td>
+                    <td>{init_matrix?.[3]?.[2] || 0}</td>
+                    <td>{init_matrix?.[3]?.[3] || 0}</td>
+                    <td>{init_matrix?.[3]?.[4] || 0}</td>
+                    <td>{init_matrix?.[3]?.[5] || 0}</td>
                   </tr>
                   <tr>
                     <th>{labels[1]}/F</th>
-                    <td>{matrix?.[4]?.[0] || 0}</td>
-                    <td>{matrix?.[4]?.[1] || 0}</td>
-                    <td>{matrix?.[4]?.[2] || 0}</td>
-                    <td>{matrix?.[4]?.[3] || 0}</td>
-                    <td>{matrix?.[4]?.[4] || 0}</td>
-                    <td>{matrix?.[4]?.[5] || 0}</td>
+                    <td>{init_matrix?.[4]?.[0] || 0}</td>
+                    <td>{init_matrix?.[4]?.[1] || 0}</td>
+                    <td>{init_matrix?.[4]?.[2] || 0}</td>
+                    <td>{init_matrix?.[4]?.[3] || 0}</td>
+                    <td>{init_matrix?.[4]?.[4] || 0}</td>
+                    <td>{init_matrix?.[4]?.[5] || 0}</td>
                   </tr>
                   <tr>
                     <th>{labels[1]}/L</th>
-                    <td>{matrix?.[5]?.[0] || 0}</td>
-                    <td>{matrix?.[5]?.[1] || 0}</td>
-                    <td>{matrix?.[5]?.[2] || 0}</td>
-                    <td>{matrix?.[5]?.[3] || 0}</td>
-                    <td>{matrix?.[5]?.[4] || 0}</td>
-                    <td>{matrix?.[5]?.[5] || 0}</td>
+                    <td>{init_matrix?.[5]?.[0] || 0}</td>
+                    <td>{init_matrix?.[5]?.[1] || 0}</td>
+                    <td>{init_matrix?.[5]?.[2] || 0}</td>
+                    <td>{init_matrix?.[5]?.[3] || 0}</td>
+                    <td>{init_matrix?.[5]?.[4] || 0}</td>
+                    <td>{init_matrix?.[5]?.[5] || 0}</td>
                   </tr>
                 </tbody>
               </table>
@@ -494,12 +509,12 @@ function Welc() {
         <div style={styles.Box21}>
             <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
                 <div>
-                    <h1 className="buttonn">Accuracy: xxx</h1>
-                    <h1 className="buttonn">Precision: xxx</h1>
+                    <h1 className="buttonn">Accuracy: {init_semi_accuracy}</h1>
+                    <h1 className="buttonn">Precision: {init_semi_precision}</h1>
                 </div>
                 <div style={{borderLeft:'1px solid'}}>
-                    <h1 className="buttonn11">Recall: xxx</h1>
-                    <h1 className="buttonn11">Rate Of Learning: xxx</h1>
+                    <h1 className="buttonn11">Recall: {init_semi_recall}</h1>
+                    <h1 className="buttonn11">Rate Of Learning: {init_rate_of_learning}</h1>
                 </div>
             </div>
         </div>
@@ -511,12 +526,12 @@ function Welc() {
 <div style={styles.Box21}>
     <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
         <div>
-            <h1 className="buttonn">Accuracy: xxx</h1>
-            <h1 className="buttonn">Precision: xxx</h1>
+            <h1 className="buttonn">Accuracy: {semi_accuracy}</h1>
+            <h1 className="buttonn">Precision: {semi_precision}</h1>
         </div>
         <div style={{borderLeft:'1px solid'}}>
-            <h1 className="buttonn11">Recall: xxx</h1>
-            <h1 className="buttonn11">Rate Of Learning: xxx</h1>
+            <h1 className="buttonn11">Recall: {semi_recall}</h1>
+            <h1 className="buttonn11">Rate Of Learning: {rate_of_learning}</h1>
         </div>
     </div>
 </div>
@@ -537,12 +552,12 @@ function Welc() {
         <div style={styles.Box21}>
             <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
                 <div>
-                    <h1 className="buttonn">Accuracy: xxx</h1>
-                    <h1 className="buttonn">Precision: xxx</h1>
+                    <h1 className="buttonn">Accuracy: {init_accuracy}</h1>
+                    <h1 className="buttonn">Precision: {init_precision}</h1>
                 </div>
                 <div style={{borderLeft:'1px solid'}}>
-                    <h1 className="buttonn11">Recall: xxx</h1>
-                    <h1 className="buttonn11">Rate Of Learning: xxx</h1>
+                    <h1 className="buttonn11">Recall: {init_recall}</h1>
+                    <h1 className="buttonn11">Rate Of Learning: {init_rate_of_learning}</h1>
                 </div>
             </div>
         </div>
@@ -554,12 +569,12 @@ function Welc() {
 <div style={styles.Box21}>
     <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
         <div>
-            <h1 className="buttonn">Accuracy: xxx</h1>
-            <h1 className="buttonn">Precision: xxx</h1>
+            <h1 className="buttonn">Accuracy: {accuracy}</h1>
+            <h1 className="buttonn">Precision: {precision}</h1>
         </div>
         <div style={{borderLeft:'1px solid'}}>
-            <h1 className="buttonn11">Recall: xxx</h1>
-            <h1 className="buttonn11">Rate Of Learning: xxx</h1>
+            <h1 className="buttonn11">Recall: {recall}</h1>
+            <h1 className="buttonn11">Rate Of Learning: {rate_of_learning}</h1>
         </div>
     </div>
 </div>
@@ -573,7 +588,7 @@ function Welc() {
 
 
       <div style={{marginBottom:'9%',display:'flex',justifyContent:'center',zIndex:'100'}}>
-      <button className="RunA">Run Algorithm Again</button>
+      <button className="RunA" onClick={goToAlgo}>Run Algorithm Again</button>
       </div>
 
     </div>
@@ -581,4 +596,4 @@ function Welc() {
   );
 }
 
-export default Welc;
+export default Final;
