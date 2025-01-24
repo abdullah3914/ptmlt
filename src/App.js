@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './images/logo4.png';
+import logo from './images/logo5.png';
 import ReactDOM from 'react-dom';
 import Welc from './Welcome';
 import Initial from './initial';

@@ -381,7 +381,7 @@ function Settings() {
       width: '30%',  // Full width
       height: '180%',  // Take up 50% of the height
       display: 'flex',
-      marginTop: '38.5%',
+      marginTop: '32.5%',
       marginLeft: '2%',
       verticalAlign: 'top',
       marginRight: '4%',
@@ -466,9 +466,9 @@ function Settings() {
       //borderLeft: '0px',
       borderTop: '0',
       borderBottom: '0',
-
       //borderColor: 'linear-gradient( 109.6deg,  rgba(112,246,255,0.33) 11.2%, rgba(221,108,241,0.26) 42%, rgba(229,106,253,0.71) 71.5%, rgba(123,183,253,1) 100.2% )',
     },
+
 
     img2: {
       width: '50%',
@@ -476,6 +476,7 @@ function Settings() {
       objectFit: 'cover',
       display: 'block',
     },
+
 
     popupOverlay: {
       position: "fixed",
@@ -489,6 +490,8 @@ function Settings() {
       justifyContent: "center",
       zIndex: 1000,
     },
+
+
     popupContent: {
       backgroundColor: "white",
       padding: "20px",
@@ -499,6 +502,8 @@ function Settings() {
       fontFamily: "Poppins, sans-serif",
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
     },
+
+
     closeButton: {
       background: "red",
       color: "white",
@@ -509,6 +514,7 @@ function Settings() {
       marginTop: "10px",
     },
 
+
     loader: {
       border: "4px solid #f3f3f3",
       borderTop: "4px solid #3498db",
@@ -518,6 +524,7 @@ function Settings() {
       animation: "spin 2s linear infinite",
       margin: "20px auto",
     },
+
 
     heading: {
       fontWeight: '600',
@@ -1205,16 +1212,9 @@ function Settings() {
       <div style={styles.bottomPane}>
         <div style={styles.boxb1}>
           <div style={{ flexDirection: 'column', width: '100%' }}>
+            <div style={{paddingBottom:'40px'}}>
             <img style={styles.img} src={Process} alt="Logo" />
-            <h1 style={{
-              fontWeight: '600',
-              fontSize: '30px',
-              color: '#333333',
-              marginLeft: '4.5%',
-              marginTop: '7px',
-              marginBottom: '7px'
-            }}>Triadic Truth Table</h1>
-            <h1 style={styles.imgt3}>The triadic essence of meaning: the representamen as the vessel, the object as the reality it reflects, and the interpretant as the bridge of understanding, capturing the infinite dance between perception, reality, and interpretation </h1>
+            </div>
             <img style={styles.img} src={D6} alt="Logo" />
             <img style={{ width: '90%', marginBottom: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '30px', marginTop: '40px' }} src={Wee} alt="Logo" />
             <img style={styles.img} src={D2} alt="Logo" />
