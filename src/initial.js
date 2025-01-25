@@ -44,13 +44,14 @@ function Initial() {
   console.log("Initital Result: ", parsed_result);
 
   
-  const accuracy = parsed_result.accuracy * 100 || 0;
-  const precision = parsed_result.precision * 100 || 0;
-  const recall = parsed_result.recall * 100 || 0;
-  const rate_of_learning = parsed_result.rate_of_learning * 100 || 0;
-  const semi_accuracy = parsed_result.semi_accuracy * 100 || 0;
-  const semi_precision = parsed_result.semi_precision * 100 || 0;
-  const semi_recall = parsed_result.semi_recall * 100 || 0;
+  const accuracy = (parsed_result.accuracy * 100).toFixed(2) || 0;
+  const precision = (parsed_result.precision * 100).toFixed(2) || 0;
+  const recall = (parsed_result.recall * 100).toFixed(2) || 0;
+  const rate_of_learning = (parsed_result.rate_of_learning * 100).toFixed(2) || 0;
+  const semi_accuracy = (parsed_result.semi_accuracy * 100).toFixed(2) || 0;
+  const semi_precision = (parsed_result.semi_precision * 100).toFixed(2) || 0;
+  const semi_recall = (parsed_result.semi_recall * 100).toFixed(2) || 0;
+
   const labels_obj = parsed_result.labels || {};
   const matrix = parsed_result.matrix || [];
   const actual = parsed_result.actual || [];
@@ -384,7 +385,7 @@ function Initial() {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8080/resolveLimit", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/resolveLimit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -529,12 +530,12 @@ function Initial() {
         <div style={styles.Box21}>
             <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
                 <div>
-                    <h1 className="buttonn">Accuracy: {semi_accuracy}</h1>
-                    <h1 className="buttonn">Precision: {semi_precision}</h1>
+                    <h1 className="buttonn">Accuracy: {semi_accuracy}%</h1>
+                    <h1 className="buttonn">Precision: {semi_precision}%</h1>
                 </div>
                 <div style={{borderLeft:'1px solid'}}>
-                    <h1 className="buttonn1">Recall: {semi_recall}</h1>
-                    <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}</h1>
+                    <h1 className="buttonn1">Recall: {semi_recall}%</h1>
+                    <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}%</h1>
                 </div>
             </div>
         </div>
@@ -559,12 +560,12 @@ function Initial() {
         <div style={styles.Box21}>
             <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
                 <div>
-                    <h1 className="buttonn">Accuracy: {accuracy}</h1>
-                    <h1 className="buttonn">Precision: {precision}</h1>
+                    <h1 className="buttonn">Accuracy: {accuracy}%</h1>
+                    <h1 className="buttonn">Precision: {precision}%</h1>
                 </div>
                 <div style={{borderLeft:'1px solid'}}>
-                    <h1 className="buttonn1">Recall: {recall}</h1>
-                    <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}</h1>
+                    <h1 className="buttonn1">Recall: {recall}%</h1>
+                    <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}%</h1>
                 </div>
             </div>
         </div>

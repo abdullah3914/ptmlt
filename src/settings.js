@@ -34,14 +34,14 @@ function Settings() {
   // const [isUploaded, setIsUploaded] = useState(false);
   const [showPVal, setShowPVal] = useState(false);
   const [selectedFormula, setFormula] = useState("");
-  const [selectedOperator, setOperatorType] = useState("");
+  const [selectedOperator, setOperatorType] = useState("op1");
   const [dType, setDtype] = useState("1");
   const [file, setFile] = useState(null);
   const [isClassical, setUploadType] = useState(null);
   const [selectedConversionType, setSelectedOption] = useState("1");
   const motivationalQuotes = [
     '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
-    "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
+    "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledge maybe.",
     '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
   ];
 
@@ -50,15 +50,37 @@ function Settings() {
     let algoName = algorithm;
     console.log("ALGO NAME: ", algoName);
     let className = document.getElementById("DatasetClass").value || "";
-    let splitRatio = document.getElementById("splitRatioInput").value || 0;
-    let k_value = 0;
-    let p_value = 0;
+    let splitRatio = document.getElementById("splitRatioInput").value || -1;
+    let k_value = -1;
+    let p_value = -1;
     let documentName = "";
     let bins = 2;
     if (algoName === 'knn') {
+      if(selectedFormula == ""){
+        let message = "Please select a formula to proceed";
+        setErrMessage(message);
+        setErrorPopup(true);
+        handleLoading(false);
+        return;
+      }
       k_value = Number(document.getElementById("k_value").value);
+      if(k_value < 1 || !Number.isInteger(k_value)){
+        let message = "Please enter a positive integer for K value";
+        setErrMessage(message);
+        setErrorPopup(true);
+        handleLoading(false);
+        return;
+      }
       if (showPVal) {
         p_value = Number(document.getElementById("p_value").value);
+        console.log("P_value: ", p_value);
+        if(p_value <= 0 || !Number.isInteger(p_value)){
+          let message = "Please enter a positive integer for P value";
+        setErrMessage(message);
+        setErrorPopup(true);
+        handleLoading(false); 
+        return;
+        }
       }
       else {
         if (selectedFormula === "manhattan") {
@@ -85,6 +107,22 @@ function Settings() {
     event.preventDefault();
     //handleLoading(true);
 
+    if(className == ""){
+      let message = "Please enter a class name";
+      setErrMessage(message);
+      setErrorPopup(true);
+      handleLoading(false);
+      return;
+    }
+
+if(splitRatio < 0.1 || splitRatio > 0.99){
+  let message = "Split Ratio should be between 0.1 and 0.99";
+  setErrMessage(message);
+  setErrorPopup(true);
+  handleLoading(false);
+  return;
+}
+
     const data = {
       algo_name: algoName,
       testing_size: Number(splitRatio),
@@ -96,9 +134,9 @@ function Settings() {
       p_value: Number(p_value) || 0,
       bins: bins
     }
-
+    console.log("API: ", process.env.REACT_APP_API_URL);
     try {
-      const response = await fetch("http://127.0.0.1:8080/runAlgo", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/runAlgo`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -250,7 +288,7 @@ function Settings() {
     formData.append("file", file);
     console.log("Conversion_Type: ", selectedConversionType);
     const datasetName = isClassical ? `triadicv${selectedConversionType}_${file.name}` : file.name;
-    const input = `http://127.0.0.1:8080/${isClassical ? "uploadClassical" : "uploadTriadic"}`;
+    const input = `${process.env.REACT_APP_API_URL}/${isClassical ? "uploadClassical" : "uploadTriadic"}`;
     try {
       const response = await fetch(input, {
         method: "POST",
@@ -831,15 +869,15 @@ function Settings() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
                   <label className="custom-checkbox">
-                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="1" checked={dType === '1'} onChange={handleDType} defaultChecked />
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="1"  onChange={handleDType} defaultChecked />
                     <span className="checkbox-label">True</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="2" checked={dType === '2'} onChange={handleDType} />
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="2"  onChange={handleDType} />
                     <span className="checkbox-label">True/False</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="3" checked={dType === '3'} onChange={handleDType} />
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="3"  onChange={handleDType} />
                     <span className="checkbox-label">True/False/Limit</span>
                   </label>
                 </div>
@@ -1009,15 +1047,15 @@ function Settings() {
                 <div className="custom-checkbox1">
 
                   <label className="custom-checkbox">
-                    <input type="radio" name="option" value="op1" disabled={!(currentMenu === 'Parameter')} checked={selectedOperator === 'op1'} onChange={handleOperatorType} />
+                    <input type="radio" name="option" value="op1" disabled={!(currentMenu === 'Parameter')} defaultChecked onChange={handleOperatorType} />
                     <span className="checkbox-label">Operator 1</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" name="option" value="op2" disabled={!(currentMenu === 'Parameter')} checked={selectedOperator === 'op2'} onChange={handleOperatorType} />
+                    <input type="radio" name="option" value="op2" disabled={!(currentMenu === 'Parameter')}  onChange={handleOperatorType} />
                     <span className="checkbox-label">Operator 2</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" name="option" value="op3" disabled={!(currentMenu === 'Parameter')} checked={selectedOperator === 'op3'} onChange={handleOperatorType} />
+                    <input type="radio" name="option" value="op3" disabled={!(currentMenu === 'Parameter')}  onChange={handleOperatorType} />
                     <span className="checkbox-label">Operator 3</span>
                   </label>
 
@@ -1051,7 +1089,7 @@ function Settings() {
                 <label style={styles.formth}>
                   Enter Split Ratio
                 </label>
-                <p className="label4">Enter a value ranging from 0.1 - 1</p>
+                <p className="label4">Enter a value ranging from 0.1 - 0.99</p>
                 <input
                   type="number"
                   id="splitRatioInput"

@@ -24,13 +24,15 @@ function Final() {
   const oldResult = JSON.parse(parsed_result.initial || "{}");
   const newResult = JSON.parse(parsed_result.final || "{}");
 
-  const init_accuracy = oldResult.accuracy * 100 || 0;
-  const init_precision = oldResult.precision * 100 || 0;
-  const init_recall = oldResult.recall * 100 || 0;
-  const init_rate_of_learning = oldResult.rate_of_learning * 100 || 0;
-  const init_semi_accuracy = oldResult.semi_accuracy * 100 || 0;
-  const init_semi_precision = oldResult.semi_precision * 100 || 0;
-  const init_semi_recall = oldResult.semi_recall * 100 || 0;
+
+  const init_accuracy = (oldResult.accuracy * 100).toFixed(2) || 0;
+  const init_precision = (oldResult.precision * 100).toFixed(2) || 0;
+  const init_recall = (oldResult.recall * 100).toFixed(2) || 0;
+  const init_rate_of_learning = (oldResult.rate_of_learning * 100).toFixed(2) || 0;
+  const init_semi_accuracy = (oldResult.semi_accuracy * 100).toFixed(2) || 0;
+  const init_semi_precision = (oldResult.semi_precision * 100).toFixed(2) || 0;
+  const init_semi_recall = (oldResult.semi_recall * 100).toFixed(2) || 0;
+
   // const init_labels_obj = oldResult.labels || {};
   const init_matrix = oldResult.matrix || [];
   // const init_actual = oldResult.actual || [];
@@ -40,13 +42,15 @@ function Final() {
   //   return acc;
   // }, []);
 
-  const accuracy = newResult.accuracy * 100 || 0;
-  const precision = newResult.precision * 100 || 0;
-  const recall = newResult.recall * 100 || 0;
-  const rate_of_learning = newResult.rate_of_learning * 100 || 0;
-  const semi_accuracy = newResult.semi_accuracy * 100 || 0;
-  const semi_precision = newResult.semi_precision * 100 || 0;
-  const semi_recall = newResult.semi_recall * 100 || 0;
+  const accuracy = (newResult.accuracy * 100).toFixed(2) || 0;
+  const precision = (newResult.precision * 100).toFixed(2) || 0;
+  const recall = (newResult.recall * 100).toFixed(2) || 0;
+  const rate_of_learning = (newResult.rate_of_learning * 100).toFixed(2) || 0;
+  const semi_accuracy = (newResult.semi_accuracy * 100).toFixed(2) || 0;
+  const semi_precision = (newResult.semi_precision * 100).toFixed(2)|| 0;
+  const semi_recall = (newResult.semi_recall * 100).toFixed(2) || 0;
+
+
   const labels_obj = newResult.labels || {};
   const matrix = newResult.matrix || [];
   // const actual = newResult.actual || [];
@@ -610,12 +614,12 @@ function Final() {
               <div style={styles.Box21}>
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', width: '100%' }}>
                   <div>
-                    <h1 className="buttonn">Accuracy: {init_semi_accuracy}</h1>
-                    <h1 className="buttonn">Precision: {init_semi_precision}</h1>
+                    <h1 className="buttonn">Accuracy: {init_semi_accuracy}%</h1>
+                    <h1 className="buttonn">Precision: {init_semi_precision}%</h1>
                   </div>
                   <div style={{ borderLeft: '1px solid' }}>
-                    <h1 className="buttonn11">Recall: {init_semi_recall}</h1>
-                    <h1 className="buttonn11">Rate Of Learning: {init_rate_of_learning}</h1>
+                    <h1 className="buttonn11">Recall: {init_semi_recall}%</h1>
+                    <h1 className="buttonn11">Rate Of Learning: {init_rate_of_learning}%</h1>
                   </div>
                 </div>
               </div>
@@ -627,12 +631,12 @@ function Final() {
               <div style={styles.Box21}>
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', width: '100%' }}>
                   <div>
-                    <h1 className="buttonn">Accuracy: {semi_accuracy}</h1>
-                    <h1 className="buttonn">Precision: {semi_precision}</h1>
+                    <h1 className="buttonn">Accuracy: {semi_accuracy}%</h1>
+                    <h1 className="buttonn">Precision: {semi_precision}%</h1>
                   </div>
                   <div style={{ borderLeft: '1px solid' }}>
-                    <h1 className="buttonn11">Recall: {semi_recall}</h1>
-                    <h1 className="buttonn11">Rate Of Learning: {rate_of_learning}</h1>
+                    <h1 className="buttonn11">Recall: {semi_recall}%</h1>
+                    <h1 className="buttonn11">Rate Of Learning: {rate_of_learning}%</h1>
                   </div>
                 </div>
               </div>
@@ -652,12 +656,12 @@ function Final() {
               <div style={styles.Box21}>
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', width: '100%' }}>
                   <div>
-                    <h1 className="buttonn">Accuracy: {init_accuracy}</h1>
-                    <h1 className="buttonn">Precision: {init_precision}</h1>
+                    <h1 className="buttonn">Accuracy: {init_accuracy}%</h1>
+                    <h1 className="buttonn">Precision: {init_precision}%</h1>
                   </div>
                   <div style={{ borderLeft: '1px solid' }}>
-                    <h1 className="buttonn11">Recall: {init_recall}</h1>
-                    <h1 className="buttonn11">Rate Of Learning: {init_rate_of_learning}</h1>
+                    <h1 className="buttonn11">Recall: {init_recall}%</h1>
+                    <h1 className="buttonn11">Rate Of Learning: {init_rate_of_learning}%</h1>
                   </div>
                 </div>
               </div>
@@ -669,12 +673,12 @@ function Final() {
               <div style={styles.Box21}>
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', width: '100%' }}>
                   <div>
-                    <h1 className="buttonn">Accuracy: {accuracy}</h1>
-                    <h1 className="buttonn">Precision: {precision}</h1>
+                    <h1 className="buttonn">Accuracy: {accuracy}%</h1>
+                    <h1 className="buttonn">Precision: {precision}%</h1>
                   </div>
                   <div style={{ borderLeft: '1px solid' }}>
-                    <h1 className="buttonn11">Recall: {recall}</h1>
-                    <h1 className="buttonn11">Rate Of Learning: {rate_of_learning}</h1>
+                    <h1 className="buttonn11">Recall: {recall}%</h1>
+                    <h1 className="buttonn11">Rate Of Learning: {rate_of_learning}%</h1>
                   </div>
                 </div>
               </div>
