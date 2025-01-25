@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 // import Csp from './images/csp.jpeg';
 // import Csp3 from './images/csp3.png';
 import Csp4 from './images/csp4.png';
-// import D1 from './images/d1.jpeg';
+ import D from './images/d10.png';
 // import D2 from './images/d2.png';
 // import D3 from './images/d3.jpeg';
 import D4 from './images/d4.png';
-// import Wee from './images/weel.png';
+import Wee from './images/weel.png';
 // import b3 from './images/b3.png';/* Smaller image */
 
 function Welc() {
@@ -86,13 +86,15 @@ function Welc() {
     },
 
     boxt1t:{
-      fontSize:'22px',
-      fontWeight:'500',
+      fontSize:'19px',
+      fontWeight:'400',
       color:'#262729',
       padding:'20px',
       lineHeight:'37px',
-      textAlign:'center',
+      paddingLeft:'40px',
+      paddingRight:'40px',
       textShadow:'1px',
+      textAlign:'center',
       fontFamily:'poppins',
     },
 
@@ -148,16 +150,19 @@ function Welc() {
         alignItems: 'center', 
         },
       img:{
-        width:'50%',
+        width:'45%',
         border:'solid',
         marginTop:'20px',
         borderWidth:'1px',
+        textlign:'justify',
         borderColor:'#dddddd',
         borderRadius:'320px', 
       },
 
       imgh1:{
-        paddingLeft:'15px', 
+        paddingLeft:'10px',
+        textAlign:'justify',
+        fontWeight:'550',
         fontSize:'20px',
       },
 
@@ -174,10 +179,10 @@ function Welc() {
         imgt3:{
           marginLeft:'20px', 
           marginRight:'40px', 
-          fontSize:'12px',
+          fontSize:'14px',
           fontStyle: 'bold',
           color:'#27292B',
-          textAlign:'left',
+          textAlign:'justify',
           fontWeight:'400',
           border:'solid',
           padding:'10px',
@@ -214,11 +219,10 @@ function Welc() {
           zIndex: 1000,
         },
         popupContent: {
-          backgroundColor: 'rgba(62, 65, 62, 0.42)',
-          backdropFilter: 'blur(5px)', 
-          padding: '20px',
-          borderRadius: '10px',
-          textAlign: 'center',
+          backgroundColor: 'rgba(254, 254, 254, 0.42)',
+          backdropFilter: 'blur(12px)', 
+          textAlign: 'left',
+          overflowY:'auto',
           maxWidth: '100%',
           width: '100%',
           height:'100%',
@@ -232,6 +236,26 @@ function Welc() {
           padding: '10px 20px',
           cursor: 'pointer',
           marginTop: '20px',
+          background: 'linear-gradient(135deg, #fa21cf, #00c9c9c5)',/* Reverse gradient on hover */
+    color:'white',
+    padding: '10px 20px',
+    borderRadius: '15px',
+    border: '1px solid rgb(0, 0, 0)',
+    fontSize: '16px',
+    fontWeight: '400',
+    fontFamily: 'Poppins, sans-serif',
+    transition: 'all 0.3s ease-in-out',
+        },
+
+        pheading:{
+          fontSize:'33px',
+          fontWeight:'500',
+        },
+
+        ppara:{
+          fontSize:'17px',
+          fontWeight:'500',
+          marginTop:'-10px'
         },
   };
 
@@ -241,16 +265,70 @@ function Welc() {
 {showPopup && (
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
-            <h2>About Our Research</h2>
-            <p>
-              My research explores the intersection of technology, innovation, and human experience. 
-              By focusing on creative problem-solving, I aim to design solutions that not only improve 
-              efficiency but also positively impact the lives of users. This journey has been a deep dive 
-              into understanding complex systems, user needs, and the power of thoughtful design.
+
+            <div style={{paddingLeft:'120px',paddingRight:'200px',paddingTop:'10px',paddingBottom:'100px'}}>
+
+            <h1 style={{fontSize:'50px',fontWeight:'500',marginBottom:'10px',textDecoration:'underline',color:'#333333'}} >About Triadic</h1> 
+            <div>
+
+            <h1 style={styles.pheading} >What is Tiadic Peirce logic?</h1>
+            <p style={{fontSize:'20px',fontWeight:'500',marginTop:'-16px',color:'#333333'}}>
+            Charles perse defines logic in terms of  "formal semotics", he introduces his triadic logic in 2 forms given below.
             </p>
+
+            <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-11px',color:'#333333',textDecoration:'underline'}}>Logical Rules:</h2>
+            <p style={{fontSize:'18px',fontWeight:'400',marginTop:'-12px',color:'#333333'}}>
+             Triadic logic is that logic which, though not rejecting entirely the Principle of
+             Excluded Middle, nevertheless recognizes that every proposition, S is P, is either
+             true, or false, or else S has a lower mode of being such that it can neither be
+             determinately P, nor determinately not-P, but is at the limit between P and not P</p>
+
+             <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-11px',color:'#333333',textDecoration:'underline'}}>Application:</h2>
+            <p style={{fontSize:'18px',fontWeight:'400',marginTop:'-12px',color:'#333333'}}>
+            Thus a blot is made in the sheet. Then every point of the sheet is unblackened
+            or is blackened. But there are points on the boundary line, and those points are
+            insusceptible of being unblackened or being blackened, since these predicates
+            refer to the area about S and a line has no area about any point of it.</p>
+        
+
+            <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-11px',color:'#333333',textDecoration:'underline'}}>Truth Values:</h2>
+            <ul style={{marginTop:'-12px',paddingLeft:'19px',lineHeight:'30px'}}>
+            <li >V as True (white)</li>
+            <li>F as False (blackened)</li>
+            <li>L as Limit (border-line)</li>
+            </ul>
+
+            <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-11px',color:'#333333',textDecoration:'underline'}}>Triadic Logical Operators:</h2>
+            <img style={{ width:'70%',marginTop:'-4px',border:'solid',borderWidth:'1px',textlign:'justify',borderColor:'#dddddd',borderRadius:'10px', }} src={D} alt="Logo" />
+            </div>
+
+            <h1 style={styles.pheading} >What is Tiadic Peirce Data structures and algorithm?</h1>
+            <p style={{fontSize:'19px',fontWeight:'500',marginTop:'-16px',color:'#333333'}}>
+            A data structure refers to the computational vocabulary dealing with data organization, management, and storage format, because alongside computation, representation in terms of storage and retrieval lays at the core of computers.  Data structure is meant to be physical or computational form of the data; or it is the computational counterpart of human memory per se – computational storage.  Peircean Triadic data structure (s), programming languages and algorithms lays their foundation on Peirce's Triadic Set and his Triadic Logic. Some Important concepts are listed as follows:
+            </p>
+            <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-11px',color:'#333333',textDecoration:'underline'}}>1.Triadic Data Type:</h2>
+            <p style={{fontSize:'18px',fontWeight:'400',marginTop:'-12px',color:'#333333'}}>
+            A data type is a type plus a collection of operations to manipulate the type. <br></br>For an example, Triadic variable is a member of the Triadic data type.</p>
+            <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-11px',color:'#333333',textDecoration:'underline'}}>2.Triadic Operators:</h2>
+            <p style={{fontSize:'18px',fontWeight:'400',marginTop:'-12px',color:'#333333'}}>
+            Triadic operator(s) are realization (or construct) of Trichotomic functions: logical, relational, arithmetic 
+Triadic Functions: Triadic functions are defined in programming syntax as follows: <br></br>  Triadic_&lt;return_data_type&gt;function_name &lt;Triadic_parameters&gt;
+  </p>
+  <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-5px',color:'#333333',textDecoration:'underline'}}>3.Triadic Array</h2>
+  <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-5px',color:'#333333',textDecoration:'underline'}}>4.Triadic Trees</h2>
+  <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-5px',color:'#333333',textDecoration:'underline'}}>5.Triadic Linked List</h2>
+  <p style={{fontSize:'18px',fontWeight:'400',marginTop:'-12px',color:'#333333'}}>
+  Finally, Triadic Data structures and algorithms are summarized in the following diagram.
+    </p>
+    <img style={{ width:'30%',marginTop:'-5px',border:'solid',borderWidth:'1px',textlign:'justify',borderColor:'#dddddd',borderRadius:'10px', }} src={Wee} alt="Logo" />
+    
+
+<br></br>
             <button style={styles.closeButton} onClick={togglePopup}>
               Close
             </button>
+
+            </div>
           </div>
         </div>
       )}
@@ -258,15 +336,13 @@ function Welc() {
       <div style={styles.topPane}>
 
         <div style={styles.boxt1}>
-
           <h1 style={styles.boxt1t}>
           The motivation behind this project stems from a desire to create a meaningful and 
           impactful solution to address a specific challenge. By leveraging technology and innovative ideas,
-           the goal is to simplify processes, improve efficiency, and deliver value to users. 
-           This project is driven by a passion for learning, creativity, and contributing positively to the world, 
+          the goal is to simplify processes, improve efficiency, and deliver value to users. 
+          This project is driven by a passion for learning, creativity, and contributing positively to the world, 
           while also gaining practical experience and expanding knowledge in the field
           </h1>
-
         </div>
 
         <div style={styles.boxt2}>
@@ -278,12 +354,15 @@ function Welc() {
         
       </div>
 
-      <div style={styles.bottomPane}>
+        <div style={styles.bottomPane}>
         <div style={styles.boxb1}>
-          
+          <div style={{paddingRight:'20px',display:'flex',justifyContent:'centers',alignItems:'center'}}>
           <img style={styles.img} src={Csp4} alt="Logo" />
-          <h1 style={styles.imgh1}>Charles Sanders Peirce</h1>
-
+          <div >
+          <h1 style={styles.imgh1}>Charles Sanders Peirce</h1> 
+          <h1 style={{paddingLeft:'10px',marginTop:'-12px',textAlign:'justify',fontWeight:'300',fontSize:'16px'}}>(1839-1914)</h1>
+          </div>
+          </div>
         </div>
         <div>
 
