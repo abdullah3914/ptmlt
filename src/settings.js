@@ -38,7 +38,7 @@ function Settings() {
   const [dType, setDtype] = useState("1");
   const [file, setFile] = useState(null);
   const [isClassical, setUploadType] = useState(null);
-  const [selectedConversionType, setSelectedOption] = useState("");
+  const [selectedConversionType, setSelectedOption] = useState("1");
   const motivationalQuotes = [
     '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
     "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
@@ -137,7 +137,22 @@ function Settings() {
     'bernouli': 'spam.csv',
     'knn': 'diabetes.csv',
     'linear_regression': 'house_price.csv'
-  }
+  };
+
+  const defaultClassNames = {
+    'dt_id3': 'Recurred',
+    'dt_c5_0': 'Recurred',
+    'gaussian': 'Recurred',
+    'multinomial': 'isSpam',
+    'bernouli': 'isSpam',
+    'knn': 'Outcome',
+    'linear_regression': 'price'
+  };
+
+  const defaultDocumentLabel = {
+    'multinomial': 'document',
+    'bernouli': 'document',
+  };
 
 
   const handleDType = (event) => {
@@ -161,8 +176,9 @@ function Settings() {
     }
   };
 
-  const handleDatasetType = (value) => {
-    setDatasetType(value);
+  const handleDatasetType = (event) => {
+    console.error("HandleDatasettype: ", event.target.value);
+    setDatasetType(event.target.value);
   }
 
   const handleCurrentMenu = (value, isFirst) => {
@@ -232,7 +248,8 @@ function Settings() {
     const formData = new FormData();
     formData.append("conversion_type", selectedConversionType);
     formData.append("file", file);
-    const datasetName = file.name;
+    console.log("Conversion_Type: ", selectedConversionType);
+    const datasetName = isClassical ? `triadicv${selectedConversionType}_${file.name}` : file.name;
     const input = `http://127.0.0.1:8080/${isClassical ? "uploadClassical" : "uploadTriadic"}`;
     try {
       const response = await fetch(input, {
@@ -278,6 +295,7 @@ function Settings() {
   const handleDataset = () => {
     switch (datasetType) {
       case 'o':
+        console.error("Dataset Type: ", datasetType);
         const name = `triadicv${dType}_${datasetNames[algorithm]}`;
         setDataset(name);
         break;
@@ -306,7 +324,6 @@ function Settings() {
   useEffect(() => {
     handleCurrentMenu('Algorithm', true);
   }, []);
-
 
 
   const styles = {
@@ -526,6 +543,7 @@ function Settings() {
     },
 
 
+
     heading: {
       fontWeight: '600',
       fontSize: '30px',
@@ -666,7 +684,7 @@ function Settings() {
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
             <h2>Upload Your Dataset</h2>
-            {!isUploading ? (
+            {!isUploading  ? (
               <>
                 <input
                   type="file"
@@ -685,7 +703,19 @@ function Settings() {
                 </button>
               </>
             ) : (
-              <div>
+              <div>  <style>
+              {`
+                @keyframes spin {
+                  0% {
+                    transform: rotate(0deg);
+                  }
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }
+              `}
+            </style>
+              
                 <div style={styles.loader}></div>
                 <p>Uploading...</p>
               </div>
@@ -694,14 +724,14 @@ function Settings() {
         </div>
       )}
 
-{showErrorPopup && (
+      {showErrorPopup && (
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
             <h2>Error</h2>
-               <p>{errMessage}</p>
-                <button style={styles.closeButton} onClick={()=> setErrorPopup(false)}>
-                  Close
-                </button>
+            <p>{errMessage}</p>
+            <button style={styles.closeButton} onClick={() => setErrorPopup(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}
@@ -785,7 +815,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="o"  onChange={handleDatasetType} defaultChecked />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value='o' onChange={handleDatasetType} defaultChecked />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -908,7 +938,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u1"  onChange={handleDatasetType} />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value='u1' onChange={handleDatasetType} />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -923,15 +953,15 @@ function Settings() {
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
                     <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="1"  onChange={handleOptionChange} defaultChecked />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="1" onChange={handleOptionChange} defaultChecked />
                       <span className="checkbox-label">True</span>
                     </label>
                     <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="2"  onChange={handleOptionChange} />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="2" onChange={handleOptionChange} />
                       <span className="checkbox-label">True/False</span>
                     </label>
                     <label className="custom-checkbox">
-                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="3"  onChange={handleOptionChange} />
+                      <input type="radio" disabled={!(currentMenu === 'Dataset')} name="conversionOption" value="3" onChange={handleOptionChange} />
                       <span className="checkbox-label">True/False/Limit</span>
                     </label>
                   </div>
@@ -944,7 +974,7 @@ function Settings() {
           <div style={styles.boxt1}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <label className="custom-checkbox" style={{ marginRight: '-15px', marginLeft: '20px' }}>
-                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value="u2" onChange={handleDatasetType} />
+                <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetSelection" value='u2' onChange={handleDatasetType} />
                 <span className="checkbox-label"></span>
               </label>
               <h1 style={styles.boxt1t}>
@@ -1005,7 +1035,8 @@ function Settings() {
                   id="DatasetClass"
                   name="name"
                   required
-                  disabled={!(currentMenu === 'Parameter')}
+                  disabled={!(currentMenu === 'Parameter') || datasetType == 'o'}
+                  defaultValue={datasetType == 'o' ? defaultClassNames[algorithm] : ""}
                   style={{
                     fontSize: '14px',
                     width: '80%',
@@ -1145,7 +1176,8 @@ function Settings() {
                     <input
                       type="text"
                       id="documentName"
-                      disabled={!(currentMenu === 'Parameter')}
+                      defaultValue={datasetType == 'o' ? defaultDocumentLabel[algorithm] : ""}
+                      disabled={!(currentMenu === 'Parameter') || datasetType == 'o'}
                       name="name"
                       required
                       style={{
@@ -1173,7 +1205,7 @@ function Settings() {
                   <p style={{ marginTop: '0px', fontSize: '12px' }}>Enter Positive integer</p>
                   <input
                     type="number"
-                    id="k_value"
+                    id="bins"
                     name="number"
                     min="1"
                     step="1"
@@ -1212,8 +1244,8 @@ function Settings() {
       <div style={styles.bottomPane}>
         <div style={styles.boxb1}>
           <div style={{ flexDirection: 'column', width: '100%' }}>
-            <div style={{paddingBottom:'40px'}}>
-            <img style={styles.img} src={Process} alt="Logo" />
+            <div style={{ paddingBottom: '40px' }}>
+              <img style={styles.img} src={Process} alt="Logo" />
             </div>
             <img style={styles.img} src={D6} alt="Logo" />
             <img style={{ width: '90%', marginBottom: '40px', display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '30px', marginTop: '40px' }} src={Wee} alt="Logo" />

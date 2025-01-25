@@ -271,9 +271,9 @@ function Welc() {
             <h1 style={{fontSize:'50px',fontWeight:'500',marginBottom:'10px',textDecoration:'underline',color:'#333333'}} >About Triadic</h1> 
             <div>
 
-            <h1 style={styles.pheading} >What is Tiadic Peirce logic?</h1>
+            <h1 style={styles.pheading} >What is Triadic Peirce logic?</h1>
             <p style={{fontSize:'20px',fontWeight:'500',marginTop:'-16px',color:'#333333'}}>
-            Charles perse defines logic in terms of  "formal semotics", he introduces his triadic logic in 2 forms given below.
+            Charles Peirce defines logic in terms of  "formal semotics", he introduces his triadic logic in 2 forms given below.
             </p>
 
             <h2 style={{fontSize:'20px',fontWeight:'500',marginTop:'-11px',color:'#333333',textDecoration:'underline'}}>Logical Rules:</h2>
@@ -302,7 +302,7 @@ function Welc() {
             <img style={{ width:'70%',marginTop:'-4px',border:'solid',borderWidth:'1px',textlign:'justify',borderColor:'#dddddd',borderRadius:'10px', }} src={D} alt="Logo" />
             </div>
 
-            <h1 style={styles.pheading} >What is Tiadic Peirce Data structures and algorithm?</h1>
+            <h1 style={styles.pheading} >What is Triadic Peirce Data structures and algorithm?</h1>
             <p style={{fontSize:'19px',fontWeight:'500',marginTop:'-16px',color:'#333333'}}>
             A data structure refers to the computational vocabulary dealing with data organization, management, and storage format, because alongside computation, representation in terms of storage and retrieval lays at the core of computers.  Data structure is meant to be physical or computational form of the data; or it is the computational counterpart of human memory per se – computational storage.  Peircean Triadic data structure (s), programming languages and algorithms lays their foundation on Peirce's Triadic Set and his Triadic Logic. Some Important concepts are listed as follows:
             </p>
