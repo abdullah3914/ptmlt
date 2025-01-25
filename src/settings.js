@@ -130,13 +130,13 @@ function Settings() {
 
 
   const datasetNames = {
-    'dt_id3': 'play_tennis.csv',
-    'dt_c5_0': 'play_tennis.csv',
-    'gaussian': 'play_tennis.csv',
-    'multinomial': 'spam_mails.csv',
-    'bernouli': 'spam_mails.csv',
-    'knn': 'diagnosis.csv',
-    'linearRegression': 'LR1.csv'
+    'dt_id3': 'Thyroid_Diff.csv',
+    'dt_c5_0': 'Thyroid_Diff.csv',
+    'gaussian': 'Thyroid_Diff.csv',
+    'multinomial': 'spam.csv',
+    'bernouli': 'spam.csv',
+    'knn': 'diabetes.csv',
+    'linear_regression': 'house_price.csv'
   }
 
 
@@ -737,7 +737,7 @@ function Settings() {
 
                   <div style={styles.Aoption}>
                     <img style={styles.Icon} src={Icon} alt="Logo" />
-                    <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => { handleClick('linearRegression'); showOptions(null) }}>Linear Regression</button>
+                    <button className="button" disabled={!(currentMenu === 'Algorithm')} onClick={() => { handleClick('linear_regression'); showOptions(null) }}>Linear Regression</button>
                   </div>
 
                   <div style={styles.Aoption}>
