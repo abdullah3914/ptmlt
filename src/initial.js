@@ -10,7 +10,7 @@ import './initial.css'
 // import D3 from './images/d3.jpeg';
 // import D4 from './images/d4.png';
 import D7 from './images/d7.png';
-import D8 from './images/d8.png';
+// import D8 from './images/d8.png';
 import D9 from './images/d9.png';
 import A1 from './images/a1.png';
 import A2 from './images/a2.png';
@@ -245,10 +245,12 @@ function Initial() {
           },
         
         img2:{
-          width:'50%',
-         
+          width:'100%',
+          fontSize:'20px',
           objectFit:'cover',
+          border: '1px solid black',
           display:'block',
+          padding:'20px',
         },
 
         heading:{
@@ -331,13 +333,6 @@ function Initial() {
             paddingLeft:'30px',
             border: '1px solid',
             background: 'linear-gradient(135deg,rgba(0, 201, 167, 0.38),rgba(0, 164, 224, 0.37))',
-          },
-
-          img2:{
-            fontSize:'20px',
-            width:'100%',
-            border: '1px solid black',
-            padding:'20px',
           },
 
           results:{

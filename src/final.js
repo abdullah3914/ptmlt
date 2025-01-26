@@ -314,12 +314,17 @@ function Final() {
       //borderColor: 'linear-gradient( 109.6deg,  rgba(112,246,255,0.33) 11.2%, rgba(221,108,241,0.26) 42%, rgba(229,106,253,0.71) 71.5%, rgba(123,183,253,1) 100.2% )',
     },
 
-    img2: {
-      width: '50%',
-
-      objectFit: 'cover',
-      display: 'block',
-    },
+    // img2: {
+    //   width: '50%',
+    //   objectFit: 'cover',
+    //   display: 'block',
+    // },
+    // img2: {
+    //   fontSize: '20px',
+    //   width: '100%',
+    //   border: '1px solid black',
+    //   padding: '20px',
+    // },
 
     heading: {
       fontWeight: '600',
@@ -401,13 +406,6 @@ function Final() {
       paddingLeft: '30px',
       border: '1px solid',
       background: 'linear-gradient(135deg,rgba(0, 201, 167, 0.38),rgba(0, 164, 224, 0.37))',
-    },
-
-    img2: {
-      fontSize: '20px',
-      width: '100%',
-      border: '1px solid black',
-      padding: '20px',
     },
 
     results: {

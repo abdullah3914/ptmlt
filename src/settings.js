@@ -4,7 +4,7 @@ import './settings.css';
 // import Csp from './images/csp.jpeg';
 // import Csp3 from './images/csp3.png';
 // import Csp4 from './images/csp4.png';
-import D5 from './images/d5.png';
+// import D5 from './images/d5.png';
 import D6 from './images/d6.png';
 // import D1 from './images/d1.jpeg';
 import D2 from './images/d2.png';
@@ -56,7 +56,7 @@ function Settings() {
     let documentName = "";
     let bins = 2;
     if (algoName === 'knn') {
-      if(selectedFormula == ""){
+      if(selectedFormula === ""){
         let message = "Please select a formula to proceed";
         setErrMessage(message);
         setErrorPopup(true);
@@ -107,7 +107,7 @@ function Settings() {
     event.preventDefault();
     //handleLoading(true);
 
-    if(className == ""){
+    if(className === ""){
       let message = "Please enter a class name";
       setErrMessage(message);
       setErrorPopup(true);
@@ -221,7 +221,7 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
 
   const handleCurrentMenu = (value, isFirst) => {
     console.log("Value: ", value);
-    if (!isFirst && currentMenu === 'Algorithm' && algorithm == null) {
+    if (!isFirst && currentMenu === 'Algorithm' && algorithm === null) {
       alert("Please select an algorithm first.");
       return;
     }
@@ -361,7 +361,7 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
 
   useEffect(() => {
     handleCurrentMenu('Algorithm', true);
-  }, []);
+  }, );
 
 
   const styles = {
@@ -1073,8 +1073,8 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
                   id="DatasetClass"
                   name="name"
                   required
-                  disabled={!(currentMenu === 'Parameter') || datasetType == 'o'}
-                  defaultValue={datasetType == 'o' ? defaultClassNames[algorithm] : ""}
+                  disabled={!(currentMenu === 'Parameter') || datasetType === 'o'}
+                  defaultValue={datasetType === 'o' ? defaultClassNames[algorithm] : ""}
                   style={{
                     fontSize: '14px',
                     width: '80%',
@@ -1214,8 +1214,8 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
                     <input
                       type="text"
                       id="documentName"
-                      defaultValue={datasetType == 'o' ? defaultDocumentLabel[algorithm] : ""}
-                      disabled={!(currentMenu === 'Parameter') || datasetType == 'o'}
+                      defaultValue={datasetType === 'o' ? defaultDocumentLabel[algorithm] : ""}
+                      disabled={!(currentMenu === 'Parameter') || datasetType === 'o'}
                       name="name"
                       required
                       style={{

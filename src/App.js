@@ -1,16 +1,16 @@
 import React from 'react';
 import logo from './images/logo5.png';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import Welc from './Welcome';
 import Initial from './initial';
-import Background from './images/background.svg';
+// import Background from './images/background.svg';
 import Settings from './settings'
 import Final from './final'
 //import { AlgorithmProvider } from './AlgoContext';
 import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
-import {useContext} from 'react';
+// import {useContext} from 'react';
 
 
 /*ReactDOM.render(

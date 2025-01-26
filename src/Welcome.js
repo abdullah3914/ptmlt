@@ -236,11 +236,11 @@ function Welc() {
           padding: '10px 20px',
           cursor: 'pointer',
           marginTop: '20px',
-          background: 'linear-gradient(135deg, #fa21cf, #00c9c9c5)',/* Reverse gradient on hover */
-    color:'white',
-    padding: '10px 20px',
-    borderRadius: '15px',
-    border: '1px solid rgb(0, 0, 0)',
+    //       background: 'linear-gradient(135deg, #fa21cf, #00c9c9c5)',/* Reverse gradient on hover */
+    // color:'white',
+    // padding: '10px 20px',
+    // borderRadius: '15px',
+    // border: '1px solid rgb(0, 0, 0)',
     fontSize: '16px',
     fontWeight: '400',
     fontFamily: 'Poppins, sans-serif',
