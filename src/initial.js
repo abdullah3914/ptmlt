@@ -24,12 +24,18 @@ function Initial() {
    const [showErrorPopup, setErrorPopup] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
       const [errMessage, setErrMessage] = useState("");
+      const [triadicOperator, setTriadicOperator] = useState();
         const [quote, setQuote] = useState('');
+        const [percentAdded, setPercentAdded] = useState(false);
         const motivationalQuotes = [
           '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
           "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
           '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
         ];
+
+        const handleTriadicOperator = (event) => {
+          setTriadicOperator(event.target.value);
+        };
     
   const { result } = location.state || {};
   let parsed_result = {};
@@ -367,16 +373,30 @@ function Initial() {
           }
   };
 
+  const percentageUpdated = () => {
+setPercentAdded(true);
+  }
+
   const resolveLimit = async () => {
     handleLoading(true);
     const auto = true;
-    const percentage = Number(document.getElementById("percentageInput").value) / 100;
+    const percentage = percentAdded? Number(document.getElementById("percentageInput").value) : -1;
+
+    if(percentage < 0 || percentage > 100){
+      let message = "Please enter percentage between 0-100";
+      setErrMessage(message);
+      setErrorPopup(true);
+      return;
+    } 
+
+    const op_type = Number(triadicOperator);
 
     const data = {
       actual: actual,
       predicted: predicted,
-      percentage: percentage,
-      auto: auto
+      percentage: percentage/100,
+      auto: auto,
+      op_type: op_type
     };
 
     try {
@@ -583,17 +603,17 @@ function Initial() {
       <div class="checkbox-containerr">
         <h1 className="button22">Resolve(With Triadic Operators)</h1>
   <label class="custom-checkboxx">
-    <input type="radio" name="option" value="1"/>
+    <input type="radio" name="option" onChange= {handleTriadicOperator} value="1" defaultChecked/>
     <span class="checkbox-labell">V1</span>
   </label>
   
   <label class="custom-checkboxx">
-    <input type="radio" name="option" value="2"/>
+    <input type="radio" name="option" onChange= {handleTriadicOperator} value="2"/>
     <span class="checkbox-labell">V2</span>
   </label>
   
   <label class="custom-checkboxx">
-    <input type="radio" name="option" value="3"/>
+    <input type="radio" name="option"  onChange= {handleTriadicOperator} value="3"/>
     <span class="checkbox-labell">V3</span>
   </label>
 </div>
@@ -615,6 +635,7 @@ function Initial() {
                     max="100"
                     step="1"
                     required
+                    onChange={percentageUpdated}
                     style={{
                       padding: '8px',
                       fontSize: '14px',
