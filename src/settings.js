@@ -45,6 +45,7 @@ function Settings() {
     '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
   ];
 
+
   const handleFormSubmit = async (event) => {
     handleLoading(true);
     let algoName = algorithm;
@@ -250,6 +251,11 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
     setCurrentMenu(value);
   }
 
+  useEffect(()=> {
+    handleCurrentMenu("Algorithm", true);
+    // eslint-disable-next-line
+ }, [])
+
   useEffect(() => {
     console.log('Value has changed to:', currentMenu);
     const block = document.getElementById(currentMenu);
@@ -357,11 +363,6 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
   const showOptions = (algorithmName) => {
     setClickedButton(algorithmName === clickedButton ? null : algorithmName); // Toggle display for that button
   };
-
-
-  useEffect(() => {
-    handleCurrentMenu('Algorithm', true);
-  }, );
 
 
   const styles = {

@@ -21,22 +21,21 @@ function Initial() {
 
   const navigate = useNavigate();
   const location = useLocation();
-   const [showErrorPopup, setErrorPopup] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-      const [errMessage, setErrMessage] = useState("");
-      const [triadicOperator, setTriadicOperator] = useState();
-        const [quote, setQuote] = useState('');
-        const [percentAdded, setPercentAdded] = useState(false);
-        const motivationalQuotes = [
-          '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
-          "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
-          '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
-        ];
+  const [showErrorPopup, setErrorPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
+  const [quote, setQuote] = useState('');
+  const [selectedOperator, setOperatorType] = useState("op1");
+  const motivationalQuotes = [
+    '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
+    "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
+    '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
+  ];
 
-        const handleTriadicOperator = (event) => {
-          setTriadicOperator(event.target.value);
-        };
-    
+  const handleOperatorType = (e) => {
+    setOperatorType(e.target.value);
+  }
+
   const { result } = location.state || {};
   let parsed_result = {};
   try {
@@ -49,7 +48,7 @@ function Initial() {
 
   console.log("Initital Result: ", parsed_result);
 
-  
+
   const accuracy = (parsed_result.accuracy * 100).toFixed(2) || 0;
   const precision = (parsed_result.precision * 100).toFixed(2) || 0;
   const recall = (parsed_result.recall * 100).toFixed(2) || 0;
@@ -112,291 +111,278 @@ function Initial() {
       height: '60%',  // Take up 50% of the height
       //backgroundColor: '#f0f0f0',  // Optional background for visibility
       display: 'flex',
-      marginTop:'9%',
-      backgroundImage:'{b3}', 
-      marginRight:'5%',
-      marginLeft:'5%',
-      border:'solid',
-      borderWidth:'1px',
-      borderRadius:'20px',
-      borderColor:'  #dddddd',
-      backgroundColor:'none',   
-      backdropFilter: 'blur(5px)',   
-      zIndex: '10', 
+      marginTop: '9%',
+      backgroundImage: '{b3}',
+      marginRight: '5%',
+      marginLeft: '5%',
+      border: 'solid',
+      borderWidth: '1px',
+      borderRadius: '20px',
+      borderColor: '  #dddddd',
+      backgroundColor: 'none',
+      backdropFilter: 'blur(5px)',
+      zIndex: '10',
       justifyContent: 'center',
-      alignItems: 'start',  
+      alignItems: 'start',
     },
 
-    
 
-    boxt1:{
+
+    boxt1: {
       //border:'solid',
       //borderWidth:'1px',
       //backdropFilter: 'blur(5px)',   
-      margin:'40px',
-      marginTop:'0px',
-      width:'60%',
-      borderRadius:'20px',
-      background:'linear-gradient(90deg, rgba(0, 255, 72, 0.24) 0%, rgba(0, 204, 255, 0.33) 100%)',
+      margin: '40px',
+      marginTop: '0px',
+      width: '60%',
+      borderRadius: '20px',
+      background: 'linear-gradient(90deg, rgba(0, 255, 72, 0.24) 0%, rgba(0, 204, 255, 0.33) 100%)',
     },
 
-    boxt2:{
-        margin:'40px',
-        marginTop:'0px',
-        width:'60%',
-        borderRadius:'20px',
-        background:'linear-gradient(90deg, rgba(0, 255, 72, 0.24) 0%, rgba(0, 204, 255, 0.33) 100%)',
+    boxt2: {
+      margin: '40px',
+      marginTop: '0px',
+      width: '60%',
+      borderRadius: '20px',
+      background: 'linear-gradient(90deg, rgba(0, 255, 72, 0.24) 0%, rgba(0, 204, 255, 0.33) 100%)',
     },
 
-    boxt2b:{
-    background: 'linear-gradient(135deg, #00C9A7, #00A3E0)',
-    color: 'white',
-    padding: '20px 45px',
-    border: 'none',
-    borderRadius: '15px',
-    fontSize: '17px',
-    fontWeight: '400',
-    cursor: 'pointer',
-    margin:'30px',
-    fontFamily:'poppins',
-    //boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    //transition: 'all 0.3s ease-in-out',
+    boxt2b: {
+      background: 'linear-gradient(135deg, #00C9A7, #00A3E0)',
+      color: 'white',
+      padding: '20px 45px',
+      border: 'none',
+      borderRadius: '15px',
+      fontSize: '17px',
+      fontWeight: '400',
+      cursor: 'pointer',
+      margin: '30px',
+      fontFamily: 'poppins',
+      //boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      //transition: 'all 0.3s ease-in-out',
     },
 
-    boxt1t:{
-      fontSize:'22px',
-      fontWeight:'500',
-      color:'#262729',
-      padding:'20px',
-      lineHeight:'37px',
-      textAlign:'center',
-      textShadow:'1px',
-      fontFamily:'poppins',
+    boxt1t: {
+      fontSize: '22px',
+      fontWeight: '500',
+      color: '#262729',
+      padding: '20px',
+      lineHeight: '37px',
+      textAlign: 'center',
+      textShadow: '1px',
+      fontFamily: 'poppins',
     },
 
     bottomPane: {
       width: '30%',  // Full width
       height: '80%',  // Take up 50% of the height
       display: 'flex',
-      marginTop:'8%',
-      marginLeft:'2%',
-      marginRight:'4%',
+      marginTop: '8%',
+      marginLeft: '2%',
+      marginRight: '4%',
       flexDirection: 'column',
-      border:'solid',
-      borderWidth:'1px',
-      borderRadius:'20px',
-      borderColor:'  #dddddd',
-      backgroundColor:'none',  /* Semi-transparent white background */
+      border: 'solid',
+      borderWidth: '1px',
+      borderRadius: '20px',
+      borderColor: '  #dddddd',
+      backgroundColor: 'none',  /* Semi-transparent white background */
       backdropFilter: 'blur(5px)',  /* Apply blur effect to the background */
       zIndex: '10',
       justifyContent: 'center',
       alignItems: 'center',
-      },
+    },
 
-      boxb1:{
+    boxb1: {
       width: '50%',  // Full width
       height: '5%',  // Take up 50% of the height
       //backgroundColor: '#f0f0f0',  // Optional background for visibility
       display: 'flex',
-      marginTop:'0%',
-      marginLeft:'8%',
-      marginRight:'0%',
-      zIndex: '10',  
+      marginTop: '0%',
+      marginLeft: '8%',
+      marginRight: '0%',
+      zIndex: '10',
       justifyContent: 'center',
-      alignItems: 'center', 
+      alignItems: 'center',
       //marginBottom:'56%',
-      },
+    },
 
-      img:{
-        width:'50%',
-        border:'solid',
-        marginTop:'20px',
-        borderWidth:'1px',
-        borderColor:'#dddddd',
-        borderRadius:'320px', 
-      },
+    img: {
+      width: '50%',
+      border: 'solid',
+      marginTop: '20px',
+      borderWidth: '1px',
+      borderColor: '#dddddd',
+      borderRadius: '320px',
+    },
 
-      
 
-      imgt2:{
-        paddingLeft:'30px', 
-        paddingRight:'30px', 
-        fontSize:'17px',
-        textAlign:'center',
-        fontStyle: 'italic',
-        fontWeight:'400',
-        },
 
-        imgt3:{
-          marginLeft:'20px', 
-          marginRight:'40px', 
-          fontSize:'12px',
-          fontStyle: 'bold',
-          color:'#27292B',
-          textAlign:'left',
-          fontWeight:'400',
-          border:'solid',
-          padding:'10px',
-          borderWidth:'2px',
-          borderColor:'#dddddd',
-          paddingLeft:'15px',
-          //borderRadius:'15px',
-          borderLeft: '2px solid',
-          borderRight: '0px ',
-          //borderLeft: '0px',
-          borderTop: '0',
-          borderBottom: '0',
+    imgt2: {
+      paddingLeft: '30px',
+      paddingRight: '30px',
+      fontSize: '17px',
+      textAlign: 'center',
+      fontStyle: 'italic',
+      fontWeight: '400',
+    },
 
-          //borderColor: 'linear-gradient( 109.6deg,  rgba(112,246,255,0.33) 11.2%, rgba(221,108,241,0.26) 42%, rgba(229,106,253,0.71) 71.5%, rgba(123,183,253,1) 100.2% )',
-          },
-        
-        img2:{
-          width:'100%',
-          fontSize:'20px',
-          objectFit:'cover',
-          border: '1px solid black',
-          display:'block',
-          padding:'20px',
-        },
+    imgt3: {
+      marginLeft: '20px',
+      marginRight: '40px',
+      fontSize: '12px',
+      fontStyle: 'bold',
+      color: '#27292B',
+      textAlign: 'left',
+      fontWeight: '400',
+      border: 'solid',
+      padding: '10px',
+      borderWidth: '2px',
+      borderColor: '#dddddd',
+      paddingLeft: '15px',
+      //borderRadius:'15px',
+      borderLeft: '2px solid',
+      borderRight: '0px ',
+      //borderLeft: '0px',
+      borderTop: '0',
+      borderBottom: '0',
 
-        heading:{
-            fontWeight:'600',
-            fontSize:'30px',
-            color:'#333333',
-            //marginLeft:'3%',
-            //marginTop:'55px',
-            marginBottom:'25px',
-            borderLeft: '3px solid black', 
-            paddingLeft:'10px',
-            //marginTop:'-150px'
-        },
+      //borderColor: 'linear-gradient( 109.6deg,  rgba(112,246,255,0.33) 11.2%, rgba(221,108,241,0.26) 42%, rgba(229,106,253,0.71) 71.5%, rgba(123,183,253,1) 100.2% )',
+    },
 
-        Box1: {
-            flexDirection: 'column',
-            width: 'auto',  // Full width
-            height: '65%',  // Take up 50% of the height
-            //backgroundColor: '#f0f0f0',  // Optional background for visibility
-            display: 'flex',
-            marginTop:'8%',
-            marginRight:'5%',
-            marginLeft:'5%',
-            paddingTop:'10px',
-            paddingBottom:'40px',
-            paddingLeft:'40px',
-            border:'solid',
-            borderWidth:'1px',
-            borderRadius:'20px',
-            borderColor:'  #dddddd',
-            backgroundColor:'none',   
-            backdropFilter: 'blur(5px)',   
-            zIndex: '10', 
-            justifyContent: 'center',
-            alignItems: 'start',  
-          },
+    img2: {
+      width: '100%',
+      fontSize: '20px',
+      objectFit: 'cover',
+      border: '1px solid black',
+      display: 'block',
+      padding: '20px',
+    },
 
-          img1:{
-            fontSize:'20px',
-            width:'90%',
-          },
+    heading: {
+      fontWeight: '600',
+      fontSize: '30px',
+      color: '#333333',
+      //marginLeft:'3%',
+      //marginTop:'55px',
+      marginBottom: '25px',
+      borderLeft: '3px solid black',
+      paddingLeft: '10px',
+      //marginTop:'-150px'
+    },
 
-          img1h:{
-            fontWeight:'500',
-            fontSize:'20px',
-            color:'#333333',
-            paddingBottom:'3px',
-            textDecoration:'underline',
-            //marginLeft:'3%',
-            //marginTop:'55px',
-            marginBottom:'5px',
-          },
+    Box1: {
+      flexDirection: 'column',
+      width: 'auto',  // Full width
+      height: '65%',  // Take up 50% of the height
+      //backgroundColor: '#f0f0f0',  // Optional background for visibility
+      display: 'flex',
+      marginTop: '8%',
+      marginRight: '5%',
+      marginLeft: '5%',
+      paddingTop: '10px',
+      paddingBottom: '40px',
+      paddingLeft: '40px',
+      border: 'solid',
+      borderWidth: '1px',
+      borderRadius: '20px',
+      borderColor: '  #dddddd',
+      backgroundColor: 'none',
+      backdropFilter: 'blur(5px)',
+      zIndex: '10',
+      justifyContent: 'center',
+      alignItems: 'start',
+    },
 
-          Box2: {
-            flexDirection: 'column',
-            width: 'auto',  // Full width
-            height: '65%',  // Take up 50% of the height
-            //backgroundColor: '#f0f0f0',  // Optional background for visibility
-            display: 'flex',
-            marginTop:'4%',
-            marginRight:'5%',
-            marginLeft:'5%',
-            paddingTop:'40px',
-            paddingBottom:'40px',
-            paddingLeft:'40px',
-            border:'solid',
-            borderWidth:'1px',
-            borderRadius:'20px',
-            borderColor:'  #dddddd',
-            backgroundColor:'none',   
-            backdropFilter: 'blur(5px)',   
-            zIndex: '10', 
-            justifyContent: 'center',
-            alignItems: 'start',  
-          },
+    img1: {
+      fontSize: '20px',
+      width: '90%',
+    },
 
-          Box21:{
-            borderRadius:'20px',
-            width:'90%',
-            paddingLeft:'30px',
-            border: '1px solid',
-            background: 'linear-gradient(135deg,rgba(0, 201, 167, 0.38),rgba(0, 164, 224, 0.37))',
-          },
+    img1h: {
+      fontWeight: '500',
+      fontSize: '20px',
+      color: '#333333',
+      paddingBottom: '3px',
+      textDecoration: 'underline',
+      //marginLeft:'3%',
+      //marginTop:'55px',
+      marginBottom: '5px',
+    },
 
-          results:{
+    Box2: {
+      flexDirection: 'column',
+      width: 'auto',  // Full width
+      height: '65%',  // Take up 50% of the height
+      //backgroundColor: '#f0f0f0',  // Optional background for visibility
+      display: 'flex',
+      marginTop: '4%',
+      marginRight: '5%',
+      marginLeft: '5%',
+      paddingTop: '40px',
+      paddingBottom: '40px',
+      paddingLeft: '40px',
+      border: 'solid',
+      borderWidth: '1px',
+      borderRadius: '20px',
+      borderColor: '  #dddddd',
+      backgroundColor: 'none',
+      backdropFilter: 'blur(5px)',
+      zIndex: '10',
+      justifyContent: 'center',
+      alignItems: 'start',
+    },
 
-          },
-          Box3:{
-            flexDirection: 'row',
-            width: 'auto',  // Full width
-            height: '65%',  // Take up 50% of the height
-            //backgroundColor: '#f0f0f0',  // Optional background for visibility
-            display: 'flex',
-            marginTop:'4%',
-            marginRight:'5%',
-            marginLeft:'5%',
-            paddingTop:'40px',
-            paddingBottom:'30px',
-            paddingLeft:'40px',
-            border:'solid',
-            borderWidth:'1px',
-            borderRadius:'20px',
-            borderColor:'  #dddddd',
-            backgroundColor:'none',   
-            backdropFilter: 'blur(5px)',   
-            zIndex: '10', 
-            justifyContent: 'left',
-            alignItems: 'start',  
-          },
+    Box21: {
+      borderRadius: '20px',
+      width: '90%',
+      paddingLeft: '30px',
+      border: '1px solid',
+      background: 'linear-gradient(135deg,rgba(0, 201, 167, 0.38),rgba(0, 164, 224, 0.37))',
+    },
 
-          img3:{
-            width:'90%',
-            marginTop:'0px',
-          }
+    results: {
+
+    },
+    Box3: {
+      flexDirection: 'row',
+      width: 'auto',  // Full width
+      height: '65%',  // Take up 50% of the height
+      //backgroundColor: '#f0f0f0',  // Optional background for visibility
+      display: 'flex',
+      marginTop: '4%',
+      marginRight: '5%',
+      marginLeft: '5%',
+      paddingTop: '40px',
+      paddingBottom: '30px',
+      paddingLeft: '40px',
+      border: 'solid',
+      borderWidth: '1px',
+      borderRadius: '20px',
+      borderColor: '  #dddddd',
+      backgroundColor: 'none',
+      backdropFilter: 'blur(5px)',
+      zIndex: '10',
+      justifyContent: 'left',
+      alignItems: 'start',
+    },
+
+    img3: {
+      width: '90%',
+      marginTop: '0px',
+    }
   };
-
-  const percentageUpdated = () => {
-setPercentAdded(true);
-  }
 
   const resolveLimit = async () => {
     handleLoading(true);
     const auto = true;
-    const percentage = percentAdded? Number(document.getElementById("percentageInput").value) : -1;
-
-    if(percentage < 0 || percentage > 100){
-      let message = "Please enter percentage between 0-100";
-      setErrMessage(message);
-      setErrorPopup(true);
-      return;
-    } 
-
-    const op_type = Number(triadicOperator);
-
+    const percentage = Number(document.getElementById("percentageInput").value) / 100;
+    const sp = Number(selectedOperator[2]);
     const data = {
       actual: actual,
       predicted: predicted,
-      percentage: percentage/100,
+      percentage: percentage,
       auto: auto,
-      op_type: op_type
+      op_type: sp || 1
     };
 
     try {
@@ -410,7 +396,7 @@ setPercentAdded(true);
 
       const result = await response.text();
       console.log("Response from server:", result);
-      if (response.ok){
+      if (response.ok) {
         localStorage.setItem("initResult", JSON.stringify(parsed_result));
         const res = {
           'initial': JSON.stringify(parsed_result),
@@ -443,15 +429,15 @@ setPercentAdded(true);
 
   return (
     <>
-    <div style={styles.splitScreen}>
+      <div style={styles.splitScreen}>
 
-      <div style={styles.Box1}>
-        
-        <div style={{display:'flex',flexDirection:'row',gap:'16%',width:'100%'}}>
+        <div style={styles.Box1}>
 
-        <div>
-        <h1 style={styles.heading}>Initial Confusion Matrix</h1>
-        <table className="confusion-matrix">
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '16%', width: '100%' }}>
+
+            <div>
+              <h1 style={styles.heading}>Initial Confusion Matrix</h1>
+              <table className="confusion-matrix">
                 <thead>
                   <tr>
                     <th rowSpan="2">Actual</th>
@@ -523,150 +509,149 @@ setPercentAdded(true);
                   </tr>
                 </tbody>
               </table>
-              </div>
+            </div>
 
-        <div style={{display:'flex',justifyContent:'center',flexDirection:'column',marginTop:'3.6%', marginLeft:'0%'}}>
-        <h1 style={styles.img1h}>Triadic confusion metrix for binary classes: </h1>
-        <img style={styles.img1} src={D7} alt="Logo" />
+            <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', marginTop: '3.6%', marginLeft: '0%' }}>
+              <h1 style={styles.img1h}>Triadic confusion metrix for binary classes: </h1>
+              <img style={styles.img1} src={D7} alt="Logo" />
+            </div>
+
+
+          </div>
+
         </div>
 
+        <div style={styles.Box2}>
 
-        </div>
-        
-      </div>
+          <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
 
-      <div style={styles.Box2}>
-        
-        <div style={{display:'flex',flexDirection:'row',width:'100%'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 
-        <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
-
-        <h1 style={styles.heading}>Semi Triadic Results</h1>
-        <div style={styles.Box21}>
-            <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
-                <div>
+              <h1 style={styles.heading}>Semi Triadic Results</h1>
+              <div style={styles.Box21}>
+                <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', width: '100%' }}>
+                  <div>
                     <h1 className="buttonn">Accuracy: {semi_accuracy}%</h1>
                     <h1 className="buttonn">Precision: {semi_precision}%</h1>
-                </div>
-                <div style={{borderLeft:'1px solid'}}>
+                  </div>
+                  <div style={{ borderLeft: '1px solid' }}>
                     <h1 className="buttonn1">Recall: {semi_recall}%</h1>
                     <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}%</h1>
+                  </div>
                 </div>
+              </div>
             </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', marginBottom: '2%', marginRight: '05%' }}>
+              <h1 style={styles.img1h}>Semi Triadic Formulae: </h1>
+              <img style={styles.img2} src={A1} alt="Logo" />
+            </div>
+
+          </div>
+
         </div>
-        </div>
 
-        <div style={{display:'flex',justifyContent:'center',flexDirection:'column',marginBottom:'2%', marginRight:'05%'}}>
-        <h1 style={styles.img1h}>Semi Triadic Formulae: </h1>
-        <img style={styles.img2} src={A1} alt="Logo" />
-        </div>
+        <div style={styles.Box2}>
 
-        </div>
-        
-      </div>
+          <div style={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
 
-      <div style={styles.Box2}>
-        
-        <div style={{display:'flex',flexDirection:'row',width:'100%'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
 
-        <div style={{display:'flex',flexDirection:'column',width:'100%'}}>
-
-        <h1 style={styles.heading}>Fully Triadic Results</h1>
-        <div style={styles.Box21}>
-            <div style={{display:'flex',justifyContent:'center',flexDirection:'row',width:'100%'}}>
-                <div>
+              <h1 style={styles.heading}>Fully Triadic Results</h1>
+              <div style={styles.Box21}>
+                <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', width: '100%' }}>
+                  <div>
                     <h1 className="buttonn">Accuracy: {accuracy}%</h1>
                     <h1 className="buttonn">Precision: {precision}%</h1>
-                </div>
-                <div style={{borderLeft:'1px solid'}}>
+                  </div>
+                  <div style={{ borderLeft: '1px solid' }}>
                     <h1 className="buttonn1">Recall: {recall}%</h1>
                     <h1 className="buttonn1">Rate Of Learning: {rate_of_learning}%</h1>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
+
+            <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', marginBottom: '2%', marginRight: '05%' }}>
+              <h1 style={styles.img1h}>Fully Triadic Formulae: </h1>
+              <img style={styles.img2} src={A2} alt="Logo" />
+            </div>
+
+          </div>
+
         </div>
 
-        <div style={{display:'flex',justifyContent:'center',flexDirection:'column',marginBottom:'2%', marginRight:'05%'}}>
-        <h1 style={styles.img1h}>Fully Triadic Formulae: </h1>
-        <img style={styles.img2} src={A2} alt="Logo" />
-        </div>
+        <div style={styles.Box3}>
+
+          <div>
+            <h1 style={styles.heading}>Resolve Limit</h1>
+            <p style={{ marginTop: '-14px', marginBottom: '4px' }}>Slect one of the following method t resolve the limit</p>
+            <div class="checkbox-containerr">
+              <h1 className="button22">Resolve(With Triadic Operators)</h1>
+              <label class="custom-checkboxx">
+                <input type="radio" name="option" value="op1" defaultChecked onChange={handleOperatorType} />
+                <span class="checkbox-labell">V1</span>
+              </label>
+
+              <label class="custom-checkboxx">
+                <input type="radio" name="option" value="op2" onChange={handleOperatorType} />
+                <span class="checkbox-labell">V2</span>
+              </label>
+
+              <label class="custom-checkboxx">
+                <input type="radio" name="option" value="op3" onChange={handleOperatorType} />
+                <span class="checkbox-labell">V3</span>
+              </label>
+            </div>
+          </div>
+
+          <div style={{ marginLeft: '53px', marginRight: '50px', marginTop: '145px' }}>
+            <label
+              htmlFor="k_value"
+              className="button22"
+            >
+              Domain Expert
+            </label>
+            <p style={{ marginTop: '15px' }}>Enter Positive integer (Enter Value from 1-100)</p>
+            <input
+              type="number"
+              id="percentageInput"
+              name="number"
+              min="1"
+              max="100"
+              step="1"
+              required
+              style={{
+                padding: '8px',
+                fontSize: '14px',
+                width: '80%',
+                borderRadius: '5px',
+                marginBottom: '30px',
+                border: '1px solid black ',
+              }} />
+          </div>
+
+          <div>
+            <h1 style={styles.img1h}>Triadic Treatment of Doubt with Limit degree:</h1>
+            <img style={styles.img3} src={D9} alt="Logo" />
+          </div>
+
 
         </div>
-        
+        <div style={{ marginBottom: '9%', display: 'flex', justifyContent: 'center', zIndex: '100' }}>
+          <button className="RunA" onClick={resolveLimit}>Next</button>
+        </div>
+
       </div>
 
-      <div style={styles.Box3}>
-
-        <div>
-      <h1 style={styles.heading}>Resolve Limit</h1>
-      <p style={{marginTop:'-14px',marginBottom:'4px'}}>Slect one of the following method t resolve the limit</p>
-      <div class="checkbox-containerr">
-        <h1 className="button22">Resolve(With Triadic Operators)</h1>
-  <label class="custom-checkboxx">
-    <input type="radio" name="option" onChange= {handleTriadicOperator} value="1" defaultChecked/>
-    <span class="checkbox-labell">V1</span>
-  </label>
-  
-  <label class="custom-checkboxx">
-    <input type="radio" name="option" onChange= {handleTriadicOperator} value="2"/>
-    <span class="checkbox-labell">V2</span>
-  </label>
-  
-  <label class="custom-checkboxx">
-    <input type="radio" name="option"  onChange= {handleTriadicOperator} value="3"/>
-    <span class="checkbox-labell">V3</span>
-  </label>
-</div>
-</div>
-
-<div style={{marginLeft:'53px',marginRight:'50px',marginTop:'145px'}}>
-<label
-                    htmlFor="k_value"
-                    className="button22"
-                  >
-                Domain Expert
-                  </label>
-                  <p style={{marginTop:'15px'}}>Enter Positive integer (Enter Value from 1-100)</p>
-                  <input
-                    type="number"
-                    id="percentageInput"
-                    name="number"
-                    min="1"
-                    max="100"
-                    step="1"
-                    required
-                    onChange={percentageUpdated}
-                    style={{
-                      padding: '8px',
-                      fontSize: '14px',
-                      width: '80%',
-                      borderRadius: '5px',
-                      marginBottom:'30px',
-                      border:'1px solid black ',
-                    }}/>
-</div>
-
-<div>
-<h1 style={styles.img1h}>Triadic Treatment of Doubt with Limit degree:</h1>
-<img style={styles.img3} src={D9} alt="Logo" />
-</div>
-
-
-      </div>
-      <div style={{marginBottom:'9%',display:'flex',justifyContent:'center',zIndex:'100'}}>
-      <button className="RunA" onClick={resolveLimit}>Next</button>
-      </div>
-
-    </div>
-
-    {showErrorPopup && (
+      {showErrorPopup && (
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
             <h2>Error</h2>
-               <p>{errMessage}</p>
-                <button style={styles.closeButton} onClick={()=> setErrorPopup(false)}>
-                  Close
-                </button>
+            <p>{errMessage}</p>
+            <button style={styles.closeButton} onClick={() => setErrorPopup(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}
@@ -680,7 +665,7 @@ setPercentAdded(true);
 
         )
       }
-</>
+    </>
   );
 }
 
