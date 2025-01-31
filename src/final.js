@@ -123,25 +123,23 @@ function Final() {
       const pdf = new jsPDF("p", "mm", "a4", true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
 
-      // Check if content overflows and add pages
-      let yOffset = 0; // Start at the top of the first page
+      let yOffset = 0;
       while (yOffset < canvas.height) {
         const pageCanvas = document.createElement("canvas");
         pageCanvas.width = canvas.width;
-        pageCanvas.height = Math.min(canvas.height - yOffset, canvas.width * 1.414); // A4 aspect ratio
+        pageCanvas.height = Math.min(canvas.height - yOffset, canvas.width * 1.414); 
 
         const pageCtx = pageCanvas.getContext("2d");
         pageCtx.drawImage(canvas, 0, -yOffset, canvas.width, canvas.height);
 
         const pageData = pageCanvas.toDataURL("image/png");
 
-        if (yOffset > 0) pdf.addPage(); // Add a new page for overflow
+        if (yOffset > 0) pdf.addPage(); 
         pdf.addImage(pageData, "PNG", 0, 0, pdfWidth, (pageCanvas.height * pdfWidth) / canvas.width);
 
         yOffset += pageCanvas.height;
       }
-
-      // Save the PDF
+      
       pdf.save("result.pdf");
       handleLoading(false);
     } catch (error) {
