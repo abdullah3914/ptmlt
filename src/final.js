@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import './final.css'
@@ -139,7 +139,7 @@ function Final() {
 
         yOffset += pageCanvas.height;
       }
-      
+
       pdf.save("result.pdf");
       handleLoading(false);
     } catch (error) {

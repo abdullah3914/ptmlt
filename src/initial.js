@@ -454,6 +454,9 @@ function Initial() {
       handleLoading(false);
     } catch (error) {
       console.error("Error sending data:", error);
+      let message = `Error sending data: ${error}`;
+      setErrMessage(message);
+      setErrorPopup(true);
       handleLoading(false);
     }
   };
