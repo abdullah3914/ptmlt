@@ -242,7 +242,7 @@ function Settings() {
       setErrorPopup(true);
       return;
     }
-    if (currentMenu === 'Dataset') {
+    if (currentMenu === 'Dataset' && value !== 'Algorithm') {
       let isExist = true;
       switch (datasetType) {
         case 'o':
