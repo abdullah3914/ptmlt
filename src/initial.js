@@ -399,9 +399,18 @@ function Initial() {
   };
 
   const resolveLimit = async () => {
-    handleLoading(true);
     const auto = true;
-    const percentage = Number(document.getElementById("percentageInput").value) / 100;
+    var percentage = document.getElementById("percentageInput").value || -1;
+    if(percentage < 0 || percentage > 100){
+      let message = `Make sure percentage value is between 0-100`;
+      setErrMessage(message);
+      setErrorPopup(true);
+      return;
+    }
+    else{
+      percentage = Number(percentage)/100;
+    }
+    handleLoading(true);
     const sp = Number(selectedOperator[2]);
     const data = {
       actual: actual,
@@ -638,7 +647,7 @@ function Initial() {
             >
               Domain Expert
             </label>
-            <p style={{ marginTop: '15px' }}>Enter Positive integer (Enter Value from 1-100)</p>
+            <p style={{ marginTop: '15px' }}>Enter Positive Number (Enter Value from 1-100)</p>
             <input
               type="number"
               id="percentageInput"

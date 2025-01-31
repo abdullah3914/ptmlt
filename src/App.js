@@ -25,6 +25,7 @@ import { Routes, Route } from 'react-router-dom';
 function App() {
   return (
     <>
+     <Router>
       <div className="App">
         <header>
           <nav>
@@ -33,17 +34,16 @@ function App() {
             </div>
           </nav>
         </header>
+
+        <Routes>
+          <Route path="/" element={<Welc />} />
+          <Route path="/welc" element={<Welc />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/initial" element={<Initial />} />
+          <Route path="/final" element={<Final />} />
+        </Routes>
       </div>
-      <body>
-      <Router>
-      <Routes>
-      <Route path="/" element={<Welc/>} />
-      <Route path="/settings" element={<Settings/>} />
-      <Route path="/initial" element={<Initial/>} />
-      <Route path="/final" element={<Final/>} />
-      </Routes>
-      </Router>
-      </body>
+    </Router>
     </>
   );
 }
