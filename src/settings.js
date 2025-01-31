@@ -24,6 +24,8 @@ function Settings() {
   const [quote, setQuote] = useState('');
   const [algorithm, setAlgorithm] = useState(null);
   const [dataset, setDataset] = useState(null);
+  const [classicalDataset, setClassicalDataset] = useState(null);
+  const [triadicDataset, setTriadicDataset] = useState(null);
   const [currentMenu, setCurrentMenu] = useState("Algorithm");
   const [datasetType, setDatasetType] = useState('o');
   const [showPopup, setShowPopup] = useState(false);
@@ -45,7 +47,6 @@ function Settings() {
     '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
   ];
 
-
   const handleFormSubmit = async (event) => {
     handleLoading(true);
     let algoName = algorithm;
@@ -57,7 +58,7 @@ function Settings() {
     let documentName = "";
     let bins = 2;
     if (algoName === 'knn') {
-      if(selectedFormula === ""){
+      if (selectedFormula === "") {
         let message = "Please select a formula to proceed";
         setErrMessage(message);
         setErrorPopup(true);
@@ -65,7 +66,7 @@ function Settings() {
         return;
       }
       k_value = Number(document.getElementById("k_value").value);
-      if(k_value < 1 || !Number.isInteger(k_value)){
+      if (k_value < 1 || !Number.isInteger(k_value)) {
         let message = "Please enter a positive integer for K value";
         setErrMessage(message);
         setErrorPopup(true);
@@ -75,12 +76,12 @@ function Settings() {
       if (showPVal) {
         p_value = Number(document.getElementById("p_value").value);
         console.log("P_value: ", p_value);
-        if(p_value <= 0 || !Number.isInteger(p_value)){
+        if (p_value <= 0 || !Number.isInteger(p_value)) {
           let message = "Please enter a positive integer for P value";
-        setErrMessage(message);
-        setErrorPopup(true);
-        handleLoading(false); 
-        return;
+          setErrMessage(message);
+          setErrorPopup(true);
+          handleLoading(false);
+          return;
         }
       }
       else {
@@ -100,7 +101,20 @@ function Settings() {
 
 
     console.log("Form submitted!");
-    const fileName = dataset;
+    var fileName = "";
+    switch (datasetType) {
+      case 'o':
+        fileName = dataset;
+        break;
+      case 'u1':
+        fileName = classicalDataset;
+        break;
+      case 'u2':
+        fileName = triadicDataset;
+        break;
+      default:
+        break;
+    }
     console.log("Class Name:", className);
     console.log("Split Ratio:", splitRatio);
     const sp = Number(selectedOperator[2]);
@@ -108,7 +122,7 @@ function Settings() {
     event.preventDefault();
     //handleLoading(true);
 
-    if(className === ""){
+    if (className === "") {
       let message = "Please enter a class name";
       setErrMessage(message);
       setErrorPopup(true);
@@ -116,13 +130,13 @@ function Settings() {
       return;
     }
 
-if(splitRatio < 0.1 || splitRatio > 0.99){
-  let message = "Split Ratio should be between 0.1 and 0.99";
-  setErrMessage(message);
-  setErrorPopup(true);
-  handleLoading(false);
-  return;
-}
+    if (splitRatio < 0.1 || splitRatio > 0.99) {
+      let message = "Split Ratio should be between 0.1 and 0.99";
+      setErrMessage(message);
+      setErrorPopup(true);
+      handleLoading(false);
+      return;
+    }
 
     const data = {
       algo_name: algoName,
@@ -223,26 +237,49 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
   const handleCurrentMenu = (value, isFirst) => {
     console.log("Value: ", value);
     if (!isFirst && currentMenu === 'Algorithm' && algorithm === null) {
-      alert("Please select an algorithm first.");
+      let message = `Please select an algorithm first.`;
+      setErrMessage(message);
+      setErrorPopup(true);
       return;
     }
+    if (currentMenu === 'Dataset') {
+      let isExist = true;
+      switch (datasetType) {
+        case 'o':
+          break;
+        case 'u1':
+          isExist = classicalDataset !== null;
+          break;
+        case 'u2':
+          isExist = triadicDataset !== null;
+          break;
+        default:
+          break;
+      }
+      if (!isExist) {
+        let message = `Please upload a dataset first.`;
+        setErrMessage(message);
+        setErrorPopup(true);
+        return;
+      }
+    }
     const algo = document.getElementById('Algorithm');
-    const dataset = document.getElementById('Dataset');
+    const ds = document.getElementById('Dataset');
     const parameter = document.getElementById('Parameter');
     switch (value) {
       case "Algorithm":
         algo.style.opacity = 1;
-        dataset.style.opacity = 0.5;
+        ds.style.opacity = 0.5;
         parameter.style.opacity = 0.5;
         break;
       case "Dataset":
         algo.style.opacity = 0.5;
-        dataset.style.opacity = 1;
+        ds.style.opacity = 1;
         parameter.style.opacity = 0.5;
         break;
       case "Parameter":
         algo.style.opacity = 0.5;
-        dataset.style.opacity = 0.5;
+        ds.style.opacity = 0.5;
         parameter.style.opacity = 1;
         break;
       default:
@@ -251,10 +288,10 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
     setCurrentMenu(value);
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     handleCurrentMenu("Algorithm", true);
     // eslint-disable-next-line
- }, [])
+  }, [])
 
   useEffect(() => {
     console.log('Value has changed to:', currentMenu);
@@ -305,7 +342,12 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
         const result = await response.json(); // Parse response if JSON
         console.log("File uploaded successfully:", result);
         localStorage.setItem("dataset", datasetName);
-        setDataset(datasetName);
+        if (isClassical) {
+          setClassicalDataset(datasetName);
+        }
+        else {
+          setTriadicDataset(datasetName);
+        }
 
         setIsUploading(false);
         setShowPopup(false);
@@ -723,7 +765,7 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
             <h2>Upload Your Dataset</h2>
-            {!isUploading  ? (
+            {!isUploading ? (
               <>
                 <input
                   type="file"
@@ -743,7 +785,7 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
               </>
             ) : (
               <div>  <style>
-              {`
+                {`
                 @keyframes spin {
                   0% {
                     transform: rotate(0deg);
@@ -753,8 +795,8 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
                   }
                 }
               `}
-            </style>
-              
+              </style>
+
                 <div style={styles.loader}></div>
                 <p>Uploading...</p>
               </div>
@@ -870,15 +912,15 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
                   <label className="custom-checkbox">
-                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="1"  onChange={handleDType} defaultChecked />
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="1" onChange={handleDType} defaultChecked />
                     <span className="checkbox-label">True</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="2"  onChange={handleDType} />
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="2" onChange={handleDType} />
                     <span className="checkbox-label">True/False</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="3"  onChange={handleDType} />
+                    <input type="radio" disabled={!(currentMenu === 'Dataset')} name="datasetOption" value="3" onChange={handleDType} />
                     <span className="checkbox-label">True/False/Limit</span>
                   </label>
                 </div>
@@ -1052,11 +1094,11 @@ if(splitRatio < 0.1 || splitRatio > 0.99){
                     <span className="checkbox-label">Operator 1</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" name="option" value="op2" disabled={!(currentMenu === 'Parameter')}  onChange={handleOperatorType} />
+                    <input type="radio" name="option" value="op2" disabled={!(currentMenu === 'Parameter')} onChange={handleOperatorType} />
                     <span className="checkbox-label">Operator 2</span>
                   </label>
                   <label className="custom-checkbox">
-                    <input type="radio" name="option" value="op3" disabled={!(currentMenu === 'Parameter')}  onChange={handleOperatorType} />
+                    <input type="radio" name="option" value="op3" disabled={!(currentMenu === 'Parameter')} onChange={handleOperatorType} />
                     <span className="checkbox-label">Operator 3</span>
                   </label>
 
