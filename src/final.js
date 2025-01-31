@@ -6,6 +6,11 @@ import jsPDF from "jspdf";
 import './final.css'
 
 function Final() {
+
+  useEffect(()=> {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [showErrorPopup, setErrorPopup] = useState(false);
   const [errMessage, setErrMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);

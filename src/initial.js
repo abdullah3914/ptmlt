@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import './initial.css'
@@ -45,6 +45,10 @@ function Initial() {
     let msg = `Error parsing result: ${error}`;
     alert(msg);
   }
+
+  useEffect(()=> {
+    window.scrollTo(0, 0);
+  }, []);
 
   console.log("Initital Result: ", parsed_result);
 
