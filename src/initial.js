@@ -369,7 +369,33 @@ function Initial() {
     img3: {
       width: '90%',
       marginTop: '0px',
-    }
+    },
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black background with 50% opacity
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 9999, // Ensures it is on top of other elements
+    },
+    text: {
+      color: 'white',
+      fontSize: '24px',
+      fontWeight: 'bold',
+      marginBottom: '20px', // Adds spacing between "Loading" and the quote
+    },
+    quote: {
+      color: 'white',
+      fontSize: '18px',
+      fontStyle: 'italic',
+      textAlign: 'center',
+      padding: '0 20px', // Adds padding for better readability
+    },
   };
 
   const resolveLimit = async () => {

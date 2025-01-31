@@ -6,8 +6,15 @@ import jsPDF from "jspdf";
 import './final.css'
 
 function Final() {
-     const [showErrorPopup, setErrorPopup] = useState(false);
-           const [errMessage, setErrMessage] = useState("");
+  const [showErrorPopup, setErrorPopup] = useState(false);
+  const [errMessage, setErrMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [quote, setQuote] = useState('');
+  const motivationalQuotes = [
+    '"The essence of truth lies in its resistance to being ignored" (CP 2.139, c.1902)',
+    "If a man burns to learn and sets himself to comparing his ideas with experimental results in order that he may correct those ideas, every scientific man will recognize him as a brother, no matter how small his knowledg maybe.",
+    '"Triadic Logic is universally true" (Peirce\'s Logical Notebook, 1909)'
+  ];
   const navigate = useNavigate();
   const location = useLocation();
   const result = location.state || {};
@@ -47,7 +54,7 @@ function Final() {
   const recall = (newResult.recall * 100).toFixed(2) || 0;
   const rate_of_learning = (newResult.rate_of_learning * 100).toFixed(2) || 0;
   const semi_accuracy = (newResult.semi_accuracy * 100).toFixed(2) || 0;
-  const semi_precision = (newResult.semi_precision * 100).toFixed(2)|| 0;
+  const semi_precision = (newResult.semi_precision * 100).toFixed(2) || 0;
   const semi_recall = (newResult.semi_recall * 100).toFixed(2) || 0;
 
 
@@ -66,69 +73,80 @@ function Final() {
     navigate('/');
   }
 
+  const handleLoading = (enable) => {
+    setIsLoading(enable);
+    if (!enable) return;
+    const randomQuote =
+      motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+    setQuote(randomQuote);
+  }
+
   const handleDownloadPDF = async () => {
+    handleLoading(true);
     try {
       // Create a temporary container for the specific divs
       const tempDiv = document.createElement("div");
       tempDiv.style.position = "absolute";
-      tempDiv.style.top = "-9999px"; // Move it out of the viewport
+      tempDiv.style.top = "-9999px";
       tempDiv.style.left = "-9999px";
       tempDiv.style.background = "white";
       tempDiv.style.zIndex = "-1";
       tempDiv.style.width = "100%";
-  
+
       const div1 = document.getElementById("confusionMatrix")?.cloneNode(true);
       const div2 = document.getElementById("SemiTriadicResults")?.cloneNode(true);
       const div3 = document.getElementById("FullyTriadicResults")?.cloneNode(true);
-  
+
       if (div1) tempDiv.appendChild(div1);
       if (div2) tempDiv.appendChild(div2);
       if (div3) tempDiv.appendChild(div3);
-  
+
       document.body.appendChild(tempDiv);
-  
+
       const canvas = await html2canvas(tempDiv, {
-        scale: 2,  
-        useCORS: true, 
+        scale: 2,
+        useCORS: true,
         windowWidth: tempDiv.scrollWidth,
         windowHeight: tempDiv.scrollHeight,
         backgroundColor: 'transparent'
       });
-  
+
       // Remove the temporary container
       document.body.removeChild(tempDiv);
- 
+
       // Generate PDF
       const pdf = new jsPDF("p", "mm", "a4", true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
-  
+
       // Check if content overflows and add pages
       let yOffset = 0; // Start at the top of the first page
       while (yOffset < canvas.height) {
         const pageCanvas = document.createElement("canvas");
         pageCanvas.width = canvas.width;
         pageCanvas.height = Math.min(canvas.height - yOffset, canvas.width * 1.414); // A4 aspect ratio
-  
+
         const pageCtx = pageCanvas.getContext("2d");
         pageCtx.drawImage(canvas, 0, -yOffset, canvas.width, canvas.height);
-  
+
         const pageData = pageCanvas.toDataURL("image/png");
-  
+
         if (yOffset > 0) pdf.addPage(); // Add a new page for overflow
         pdf.addImage(pageData, "PNG", 0, 0, pdfWidth, (pageCanvas.height * pdfWidth) / canvas.width);
-  
+
         yOffset += pageCanvas.height;
       }
-  
+
       // Save the PDF
       pdf.save("result.pdf");
+      handleLoading(false);
     } catch (error) {
+      handleLoading(false);
       setErrorPopup(true);
       let msg = `Error capturing and generating PDF: ${error}`;
       setErrMessage(msg);
     }
   };
-  
+
 
 
   const styles = {
@@ -437,7 +455,33 @@ function Final() {
     img3: {
       width: '90%',
       marginTop: '0px',
-    }
+    },
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Black background with 50% opacity
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 9999, // Ensures it is on top of other elements
+    },
+    text: {
+      color: 'white',
+      fontSize: '24px',
+      fontWeight: 'bold',
+      marginBottom: '20px', // Adds spacing between "Loading" and the quote
+    },
+    quote: {
+      color: 'white',
+      fontSize: '18px',
+      fontStyle: 'italic',
+      textAlign: 'center',
+      padding: '0 20px', // Adds padding for better readability
+    },
   };
 
   return (
@@ -698,13 +742,23 @@ function Final() {
         <div style={styles.popupOverlay}>
           <div style={styles.popupContent}>
             <h2>Error</h2>
-               <p>{errMessage}</p>
-                <button style={styles.closeButton} onClick={()=> setErrorPopup(false)}>
-                  Close
-                </button>
+            <p>{errMessage}</p>
+            <button style={styles.closeButton} onClick={() => setErrorPopup(false)}>
+              Close
+            </button>
           </div>
         </div>
       )}
+
+      {
+        isLoading && (
+          <div style={styles.overlay}>
+            <p style={styles.text}>Loading</p>
+            <p style={styles.quote}>{quote}</p>
+          </div>
+
+        )
+      }
     </>
   );
 }
